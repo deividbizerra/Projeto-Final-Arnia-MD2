@@ -1,15 +1,23 @@
 import CardsUserHome from "../../componets/cardInformation";
 import { ContainerMain } from "../../componets/ui/container";
 import PersonSearchIcon from "@mui/icons-material/PersonSearch";
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import {
   CardWelcome,
   DivDate,
   DivImg,
   ContainerHome,
   CardUsers,
+  BoxDoctorsEndContractors,
+  Box,
+  ContainerContent,
+  ContainerTble,
+  BoxInformationTable,
 } from "./style";
 import TodayIcon from "@mui/icons-material/Today";
 import GroupIcon from "@mui/icons-material/Group";
+import UsersTable from "../../componets/table";
+import { Link } from "react-router-dom";
 const Home = () => {
   const currentDate = new Date();
   const formattedDate = currentDate.toLocaleDateString("pt-BR");
@@ -36,49 +44,78 @@ const Home = () => {
           </p>
         </CardWelcome>
 
-        <div className="teste">
-          <div>
+        <ContainerContent>
+          <BoxDoctorsEndContractors>
             <h4>Médicos</h4>
             <CardUsers>
-              <CardsUserHome
-                icon={<GroupIcon />}
-                title="meico"
-                content="ola"
-                variant="blue"
-              />
-              <CardsUserHome icon={<GroupIcon />} title="meico" content="ola" />
-              <CardsUserHome
-                icon={<GroupIcon />}
-                title="meico"
-                content="ola"
-                variant="red"
-              />
+              <Box>
+                <CardsUserHome
+                  icon={<GroupIcon />}
+                  title="Total"
+                  content="1000"
+                  variant="blue"
+                />
+              </Box>
+              <Box>
+                <CardsUserHome
+                  icon={<GroupIcon />}
+                  title="Disponivel"
+                  content="900"
+                />
+              </Box>
+              <Box>
+                <CardsUserHome
+                  icon={<GroupIcon />}
+                  title="Indesponível"
+                  content="1000"
+                  variant="red"
+                />
+              </Box>
             </CardUsers>
-          </div>
-          <div>
+          </BoxDoctorsEndContractors>
+
+          <BoxDoctorsEndContractors>
             <h4>Contratantes</h4>
+
             <CardUsers>
-              <CardsUserHome
-                icon={<PersonSearchIcon />}
-                title="meico"
-                content="ola"
-                variant="yellow"
-              />
-              <CardsUserHome
-                icon={<PersonSearchIcon />}
-                title="meico"
-                content="ola"
-              />
-              <CardsUserHome
-                icon={<PersonSearchIcon />}
-                title="meico"
-                content="ola"
-                variant="red"
-              />
+              <Box>
+                <CardsUserHome
+                  icon={<PersonSearchIcon />}
+                  title="Total"
+                  content="1000"
+                  variant="yellow"
+                />
+              </Box>
+              <Box>
+                <CardsUserHome
+                  icon={<PersonSearchIcon />}
+                  title="Ativos"
+                  content="1000"
+                />
+              </Box>
+
+              <Box>
+                <CardsUserHome
+                  icon={<PersonSearchIcon />}
+                  title="Inativos"
+                  content="1000"
+                  variant="red"
+                />
+              </Box>
             </CardUsers>
-          </div>
-        </div>
+          </BoxDoctorsEndContractors>
+        </ContainerContent>
       </ContainerHome>
+
+      <ContainerTble>
+        <BoxInformationTable>
+          <h2>Últimos usuários cadastrados</h2>
+          <Link to="">Ver tudo <ArrowForwardIcon/></Link>
+        </BoxInformationTable>
+        <div>
+          <UsersTable />
+        </div>
+      </ContainerTble>
     </ContainerMain>
   );
 };

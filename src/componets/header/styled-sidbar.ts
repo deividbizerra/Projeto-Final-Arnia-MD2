@@ -4,7 +4,6 @@ export const ContainerSidbar = styled.div`
   width:330px;
   background: ${({ theme }) => theme.colors.darkGreen};
   color: white;
-  height: 100vh;
   font-size: ${({ theme }) => theme.fontSizes.md};
   font-family: ${({ theme }) => theme.fonts.poppins};
   position: relative;

@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
-export const UserColor = styled.span<{ variant?: "green" | "blue" | "red" | "yellow" }>`
+export const UserColor = styled.span<{
+  variant?: "green" | "blue" | "red" | "yellow";
+}>`
   color: ${({ theme }) => theme.colors.white};
   background-color: ${({ variant, theme }) => {
     switch (variant) {
@@ -14,12 +16,23 @@ export const UserColor = styled.span<{ variant?: "green" | "blue" | "red" | "yel
         return theme.colors.green;
     }
   }};
-  width: 50px;
-  height: 50px;
+  width: 55px;
+  height: 55px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
-// Resto do código permanece o mesmo
+export const BoxCardsUser = styled.div`
+  p {
+    font-family: ${({ theme }) => theme.fonts.poppins};
+   font-size: ${({ theme }) => theme.fontSizes.md};
+   color: ${({ theme }) => theme.colors.mediumGray};
+  }&& h3{
+    font-family: ${({ theme }) => theme.fonts.sora};
+   font-size: ${({ theme }) => theme.fontSizes.lg};
+   color: ${({ theme }) => theme.colors.darkGray};
+  }
+
+`;

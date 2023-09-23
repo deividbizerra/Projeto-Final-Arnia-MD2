@@ -3,8 +3,8 @@ const theme = {
     dark: "#000",
     white: "#FFFFFF",
     green: "#00C247",
-    blue:"#004CE8",
-    red:"#FF3333",
+    blue: "#004CE8",
+    red: "#FF3333",
     lightGreen: "#B4E08E",
     brightGreen: "#00C247",
     darkGreen: "#046639",
@@ -12,7 +12,6 @@ const theme = {
     darkGray: "#212121",
     mediumGray: "#757575",
     mediumGray2: "#616161",
-
   },
   fontSizes: {
     sm: "14px",
