@@ -1,4 +1,4 @@
-import { BoxCardsUser, UserColor } from "./styled";
+import { BoxCardsUser, ContainerUsers, UserColor } from "./styled";
 
 const CardsUserHome: React.FC<UserCardProps> = ({
   icon,
@@ -7,13 +7,13 @@ const CardsUserHome: React.FC<UserCardProps> = ({
   variant,
 }) => {
   return (
-    <>
+    <ContainerUsers className="containerUser">
       <UserColor style={{ background: variant }}>{icon}</UserColor>
       <BoxCardsUser>
         <p>{title}</p>
         <h3>{content}</h3>
       </BoxCardsUser>
-    </>
+    </ContainerUsers>
   );
 };
 

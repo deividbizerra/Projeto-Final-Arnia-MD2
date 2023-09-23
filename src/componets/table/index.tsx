@@ -32,13 +32,14 @@ const dadosUsuarios = [
 
 const UsersTable = () => {
   return (
+    
     <Tabela>
       <thead>
         <tr>
-          <th>Usuário</th>
+          <th className="borderUserLeft">Usuário</th>
           <th>E-mail</th>
           <th>WhatsApp</th>
-          <th>Tipo de Usuário</th>
+          <th className="borderUserRight">Tipo de Usuário</th>
         </tr>
       </thead>
       <tbody>
@@ -52,6 +53,7 @@ const UsersTable = () => {
         ))}
       </tbody>
     </Tabela>
+  
   );
 };
 

@@ -36,3 +36,16 @@ export const BoxCardsUser = styled.div`
   }
 
 `;
+
+export const ContainerUsers = styled.div`
+    display: flex;
+    gap: 10px;
+    background:${({ theme }) => theme.colors.whiteice};;
+    width: 184px;
+    height: 78px;
+    padding: 10px;
+    border-radius: 24px;
+    align-items: center;
+   
+`
+

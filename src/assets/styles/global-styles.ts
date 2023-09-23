@@ -21,6 +21,9 @@ export default createGlobalStyle `
     font-size: 1rem;
     
   }
+  a{
+    text-decoration: none;
+  }
 
 `
 

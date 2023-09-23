@@ -1,5 +1,4 @@
 import CardsUserHome from "../../componets/cardInformation";
-import { ContainerMain } from "../../componets/ui/container";
 import PersonSearchIcon from "@mui/icons-material/PersonSearch";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import {
@@ -23,7 +22,7 @@ const Home = () => {
   const formattedDate = currentDate.toLocaleDateString("pt-BR");
 
   return (
-    <ContainerMain>
+    <>
       <ContainerHome>
         <CardWelcome>
           <DivImg>
@@ -110,13 +109,13 @@ const Home = () => {
       <ContainerTble>
         <BoxInformationTable>
           <h2>Últimos usuários cadastrados</h2>
-          <Link to="">Ver tudo <ArrowForwardIcon/></Link>
+          <Link to="">Ver tudo <ArrowForwardIcon style={{ width: '20px', height:"20px" }}/></Link>
         </BoxInformationTable>
         <div>
           <UsersTable />
         </div>
       </ContainerTble>
-    </ContainerMain>
+    </>
   );
 };
 

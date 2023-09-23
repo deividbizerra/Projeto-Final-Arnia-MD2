@@ -4,4 +4,9 @@ interface UserCardProps {
     content: string;
     variant?: "green" | "blue" | "red" | "yellow";
   }
+
+  type UserMenuProps = {
+    isOpen: boolean;
+    onClose: () => void;
+  };
   

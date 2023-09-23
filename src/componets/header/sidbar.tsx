@@ -6,25 +6,21 @@ import {
   Notifications as NotificationsIcon,
   Help as HelpIcon,
 } from "@mui/icons-material";
-import { BoxHover, ContainerImg, ContainerSidbar, Ul } from "./styled-sidbar";
-import NaveBar from "./naveBar";
+import {
+  BoxHover,
+  ContainerImg,
+  ContainerSidbar,
+  Li,
+  Ul,
+} from "./styled-sidbar";
+import { Link } from "react-router-dom";
 
 const Sidebar = () => {
-  const sidebarItems = [
-    { text: "Dashboard", icon: <DashboardIcon /> },
-    { text: "Usuários Cadastrados", icon: <PeopleIcon /> },
-    { text: "Planos", icon: <DescriptionIcon /> },
-    { text: "Especialidades", icon: <AccountTreeIcon /> },
-    { text: "Notificações", icon: <NotificationsIcon /> },
-    { text: "FAQ", icon: <HelpIcon /> },
-  ];
-
   return (
     <>
-
       <ContainerSidbar className="sidebar">
-      <NaveBar/>
-      
+       
+
         <ContainerImg>
           <img
             src="https://uploaddeimagens.com.br/images/004/616/365/original/Frame.png?1695393529"
@@ -33,20 +29,54 @@ const Sidebar = () => {
         </ContainerImg>
 
         <Ul className="sidebar-list">
-          {sidebarItems.map((item, index) => (
-            <BoxHover>
-              <li key={index} className="sidebar-item">
-                {item.icon}
-                {item.text}
-              </li>
-            </BoxHover>
-          ))}
-        </Ul>
-       
-      </ContainerSidbar>
+          <BoxHover>
+            <Li className="sidebar-item">
+              <Link to="/home">
+                <DashboardIcon /> Dashboard
+              </Link>
+            </Li>
+          </BoxHover>
+          <BoxHover>
+            <Li className="sidebar-item">
+              <Link to="registered-user">
+                <PeopleIcon /> Usuários Cadastrados
+              </Link>
+            </Li>
+          </BoxHover>
 
-      
-      
+          <BoxHover>
+            <Li className="sidebar-item">
+              <Link to="plans">
+                <DescriptionIcon /> Planos
+              </Link>
+            </Li>
+          </BoxHover>
+
+          <BoxHover>
+            <Li className="sidebar-item">
+              <Link to="specialties">
+                <AccountTreeIcon /> Especialidades
+              </Link>
+            </Li>
+          </BoxHover>
+
+          <BoxHover>
+            <Li className="sidebar-item">
+              <Link to="notifications">
+                <NotificationsIcon /> Notificações
+              </Link>
+            </Li>
+          </BoxHover>
+
+          <BoxHover>
+            <Li className="sidebar-item">
+              <Link to="faq">
+                <HelpIcon /> FAQ
+              </Link>
+            </Li>
+          </BoxHover>
+        </Ul>
+      </ContainerSidbar>
     </>
   );
 };

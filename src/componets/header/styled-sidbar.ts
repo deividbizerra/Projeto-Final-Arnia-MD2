@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 export const ContainerSidbar = styled.div`
-  width:330px;
+width: 280px;
+min-height: 100vh;
   background: ${({ theme }) => theme.colors.darkGreen};
   color: white;
   font-size: ${({ theme }) => theme.fontSizes.md};
@@ -22,15 +23,21 @@ export const Ul = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 23px;
-
   margin-left: 20px;
-  && li {
-    display: flex;
-    gap: 17px;
+
+`;
+
+export const Li = styled.li`
+gap: 17px;
     padding: 5px;
     cursor: pointer;
-  }
-`;
+    && a {
+display:flex;
+gap: 17px;
+text-decoration: none;
+color: ${({ theme }) => theme.colors.white};
+    }
+`
 
 export const BoxHover = styled.div`
   :hover {
@@ -39,8 +46,10 @@ export const BoxHover = styled.div`
     margin-right: 5px;
     background: ${({ theme }) => theme.colors.lightGreen};
     border-radius: 8px;
-    color: #046639;
-    transition: background 0.3s ease-in-out;
+    
+    transition: background 0.3s ease-in-out;&& a{
+      color: ${({ theme }) => theme.colors.darkGreen};
+    }
   }
 `;
 

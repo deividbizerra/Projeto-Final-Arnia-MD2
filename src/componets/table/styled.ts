@@ -4,7 +4,6 @@ export const Tabela = styled.table`
 
   width: 100%;
   border-collapse: collapse;
-  border-radius: 16px 16px 0 0; /* Define o border-radius nos cantos superiores */
 font-family:${({ theme }) => theme.fonts.poppins};
 font-size:${({ theme }) => theme.fontSizes.sm};
 margin-top: 30px;
@@ -17,6 +16,16 @@ margin-top: 30px;
   th {
     background-color: ${({ theme }) => theme.colors.darkGreen};
     color: ${({ theme }) => theme.colors.white};
+  }
+  tr:nth-child(even) {
+    background:${({ theme }) => theme.colors.whiteice};
+    
+  }
+  .borderUserLeft{
+    border-radius: 16px 0 0 0;
+  }
+  .borderUserRight{
+    border-radius: 0 16px 0 0;
   }
 `;
 
