@@ -45,6 +45,7 @@ export const DivDate = styled.div`
 export const ContainerHome = styled.div`
   display: flex;
   gap: 30px;
+  margin-bottom: 20px;
 `;
 
 export const CardUsers = styled.div`
@@ -80,9 +81,9 @@ export const ContainerContent = styled.div`
 `;
 
 export const ContainerTble = styled.div`
-  margin-top: 20px;
   padding: 15px;
   border-radius: 24px;
+  margin-bottom: 20px;
   box-shadow: rgba(187, 192, 205, 0.7) 0px 7px 30px 0px;
   && h2 {
     font-family: ${({ theme }) => theme.fonts.sora};

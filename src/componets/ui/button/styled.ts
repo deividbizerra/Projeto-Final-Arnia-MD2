@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
+
 export const StyledButton = styled.button<{ variant: "MAIN" | "SECONDARY" }>`
   display: flex;
   width: 400px;
@@ -20,3 +21,6 @@ export const Label = styled.label`
   color: ${({ theme }) => theme.colors.mediumGray};
   font-size: ${({ theme }) => theme.fontSizes.sm};
 `;
+
+
+

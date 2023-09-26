@@ -15,11 +15,14 @@ import {
 } from "./style";
 import TodayIcon from "@mui/icons-material/Today";
 import GroupIcon from "@mui/icons-material/Group";
-import UsersTable from "../../componets/table";
+import { dadosUsuarios } from "../registeredUser";
 import { Link } from "react-router-dom";
+import DataTable from "../../componets/table";
 const Home = () => {
   const currentDate = new Date();
   const formattedDate = currentDate.toLocaleDateString("pt-BR");
+
+  const dadosUsuariosLimitados = dadosUsuarios.slice(0, 4);
 
   return (
     <>
@@ -106,13 +109,14 @@ const Home = () => {
         </ContainerContent>
       </ContainerHome>
 
-      <ContainerTble>
+      <ContainerTble className="teste">
         <BoxInformationTable>
           <h2>Últimos usuários cadastrados</h2>
-          <Link to="">Ver tudo <ArrowForwardIcon style={{ width: '20px', height:"20px" }}/></Link>
+          <Link to="registered-user">Ver tudo <ArrowForwardIcon style={{ width: '20px', height:"20px" }}/></Link>
         </BoxInformationTable>
         <div>
-          <UsersTable />
+          <DataTable  data={dadosUsuariosLimitados} columns={["Usuário", "E-mail", "WhatsApp", "Tipo de Usuário"]}
+ />
         </div>
       </ContainerTble>
     </>
