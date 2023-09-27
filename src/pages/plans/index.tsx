@@ -34,6 +34,8 @@ const Plans = () => {
       <ContDescription description="Planos" text=""/>
 
       <ContainerCardFilter >
+ 
+
         <CardFilterUsers text={'Contratantes'} quantid={3} />
         <CardFilterUsers text={'Médicos'} quantid={3} />
       </ContainerCardFilter>

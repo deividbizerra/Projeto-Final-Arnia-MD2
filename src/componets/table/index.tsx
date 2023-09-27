@@ -70,6 +70,7 @@ const columnMapping: Record<string, string> = {
   Valor: "valor",
   "Preço Promocional": "precoPromocional",
   Situação: "situacao",
+  "Nome especialidade": "nomeEspecialidade"
 };
 
 const DataTable: React.FC<DataTableProps> = ({ data, columns }) => {

@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-
 import Stack from '@mui/material/Stack';
 import { StyledPagination } from './styled';
 
-interface TablePaginationProps {
-  data: Record<string, string>[];
+type TablePaginationProps = {
+  data: Record<string, string | boolean>[];
   itemsPerPage: number;
-  renderTable: (data: Record<string, string>[]) => React.ReactNode;
-}
+  renderTable: (data: Record<string, string | boolean>[]) => React.ReactNode;
+};
 
 const TablePagination: React.FC<TablePaginationProps> = ({ data, itemsPerPage, renderTable }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -23,14 +22,12 @@ const TablePagination: React.FC<TablePaginationProps> = ({ data, itemsPerPage, r
   return (
     <div>
       {renderTable(displayedData)}
-
-      <Stack spacing={2}> 
+      <Stack spacing={2}>   
         <StyledPagination
           count={Math.ceil(data.length / itemsPerPage)}
           page={currentPage}
           onChange={handlePageChange}
           shape="rounded"
-          
         />
       </Stack>
     </div>
@@ -38,4 +35,3 @@ const TablePagination: React.FC<TablePaginationProps> = ({ data, itemsPerPage, r
 };
 
 export default TablePagination;
-    

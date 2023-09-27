@@ -21,7 +21,7 @@ export const dadosUsuarios:Propps[] = [
     email: "joao@example.com",
     whatsapp: "+55 123456789",
     tipoUsuario: "Cliente",
-    especialidade:"Medico",
+    especialidade:"Médicos",
     cidade:"irece",
     estado:"bahia"
   },
@@ -30,7 +30,7 @@ export const dadosUsuarios:Propps[] = [
     email: "maria@example.com",
     whatsapp: "+55 987654321",
     tipoUsuario: "Administrador",
-    especialidade:"Medico",
+    especialidade:"Médicos",
     cidade:"irece",
     estado:"bahia"
   },
@@ -39,17 +39,7 @@ export const dadosUsuarios:Propps[] = [
     email: "marcos@example.com",
     whatsapp: "+55 987654321",
     tipoUsuario: "Administrador",
-    especialidade:"Medico",
-    cidade:"irece",
-    estado:"bahia"
-  },
-  
-  {
-    usuario: "Marcos",
-    email: "marcos@example.com",
-    whatsapp: "+55 987654321",
-    tipoUsuario: "Administrador",
-    especialidade:"Medico",
+    especialidade:"Médicos",
     cidade:"irece",
     estado:"bahia"
   },
@@ -59,7 +49,7 @@ export const dadosUsuarios:Propps[] = [
     email: "marcos@example.com",
     whatsapp: "+55 987654321",
     tipoUsuario: "Administrador",
-    especialidade:"Medico",
+    especialidade:"Contratantes",
     cidade:"irece",
     estado:"bahia"
   },
@@ -69,7 +59,17 @@ export const dadosUsuarios:Propps[] = [
     email: "marcos@example.com",
     whatsapp: "+55 987654321",
     tipoUsuario: "Administrador",
-    especialidade:"Medico",
+    especialidade:"Contratantes",
+    cidade:"irece",
+    estado:"bahia"
+  },
+  
+  {
+    usuario: "Marcos",
+    email: "marcos@example.com",
+    whatsapp: "+55 987654321",
+    tipoUsuario: "Administrador",
+    especialidade:"Contratantes",
     cidade:"irece",
     estado:"bahia"
   },
@@ -96,20 +96,32 @@ export const dadosUsuarios:Propps[] = [
 
 ];
 const UserCadrast = () => {
-  const [descriptionText, setDescriptionText] = useState('Todos'); // Estado para controlar o texto da descrição
+  const [descriptionText, setDescriptionText] = useState('Todos');
+  const [filteredData, setFilteredData] = useState(dadosUsuarios);
 
+  const handleFilter = (tipoUsuario: string) => {
+    setDescriptionText(tipoUsuario);
+    if (tipoUsuario === 'Todos') {
+      setFilteredData(dadosUsuarios);
+    } else {
+      // Filtrar os dados com base no tipo de usuário selecionado
+      const filtered = dadosUsuarios.filter((user) => user.especialidade === tipoUsuario);
+      setFilteredData(filtered);
+    }
+  };
   return (
     <>
       <ContDescription description="Usuários Cadastrado |" text={descriptionText} />
       <ContainerCardFilter>
-        <CardFilterUsers text={'Todos'} quantid={100} onClick={() => setDescriptionText('Todos')} />
-        <CardFilterUsers text={'Contratantes'} quantid={100} onClick={() => setDescriptionText('Contratantes')} />
-        <CardFilterUsers text={'Médicos'} quantid={100} onClick={() => setDescriptionText('Médicos')} />
+      <CardFilterUsers text={'Todos'} quantid={100} onClick={() => handleFilter('Todos')} isSelected={descriptionText === 'Todos'} />
+<CardFilterUsers text={'Contratantes'} quantid={100} onClick={() => handleFilter('Contratantes')} isSelected={descriptionText === 'Contratantes'} />
+<CardFilterUsers text={'Médicos'} quantid={100} onClick={() => handleFilter('Médicos')} isSelected={descriptionText === 'Médicos'} />
+
       </ContainerCardFilter>
       <ContainerTble style={{ borderRadius: '0px 24px 24px 24px' }}>
       
         <TablePagination
-          data={dadosUsuarios}
+          data={filteredData}
           itemsPerPage={7}
           renderTable={(displayedData) => (
             <DataTable

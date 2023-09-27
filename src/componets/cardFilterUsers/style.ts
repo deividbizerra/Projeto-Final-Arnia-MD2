@@ -9,7 +9,6 @@ justify-content: center;
 align-items: center;
 gap: 18px;
 border-radius: 16px 16px 0px 0px;
-background:${({ theme }) => theme.colors.whiteice};
 font-family:${({ theme }) => theme.fonts.poppins};
 font-size:${({ theme }) => theme.fontSizes.md};
 margin-top: 32px;
@@ -24,7 +23,7 @@ cursor:pointer;
     gap: 10px;
     border-radius: 100px;
 }
-    }
+    
 `
 
 
