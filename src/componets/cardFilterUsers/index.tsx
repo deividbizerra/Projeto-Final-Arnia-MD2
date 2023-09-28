@@ -1,4 +1,3 @@
-import theme from "../../assets/styles/theme";
 import { BoxCardFilter } from "./style";
 
 type CardFilterUsersProps = {
@@ -8,13 +7,16 @@ type CardFilterUsersProps = {
   isSelected?: boolean;
 };
 
-export const CardFilterUsers: React.FC<CardFilterUsersProps> = ({ text, quantid, onClick, isSelected }) => {
-  const backgroundColor = isSelected ? '#ffffff' : theme.colors.whiteice;
-
+export const CardFilterUsers: React.FC<CardFilterUsersProps> = ({
+  text,
+  quantid,
+  onClick,
+  isSelected,
+}) => {
   return (
-    <BoxCardFilter onClick={onClick} style={{ backgroundColor}}>
+    <BoxCardFilter onClick={onClick} isSelected={isSelected}>
       <p>{text}</p>
       <span>{quantid}</span>
     </BoxCardFilter>
   );
-}
+};

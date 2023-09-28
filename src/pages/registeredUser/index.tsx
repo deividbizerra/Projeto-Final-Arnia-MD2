@@ -73,7 +73,7 @@ export const dadosUsuarios:Propps[] = [
     cidade:"irece",
     estado:"bahia"
   },
-  
+    
   {
     usuario: "Marcos",
     email: "marcos@example.com",

@@ -1,8 +1,10 @@
+import AddButton from "../../componets/Buttons/addButton";
 import { CardFilterUsers } from "../../componets/cardFilterUsers";
 import { ContDescription } from "../../componets/contetDescription";
+import FilterSearch from "../../componets/filterSearch";
 import DataTable from "../../componets/table";
 import { ContainerTble } from "../dashBord/style";
-import { ContainerCardFilter } from "../registeredUser/styled";
+import { ContainerCardFilter, ContainerFilter } from "../registeredUser/styled";
 
 
 
@@ -36,10 +38,16 @@ const Plans = () => {
       <ContainerCardFilter >
  
 
-        <CardFilterUsers text={'Contratantes'} quantid={3} />
+        <CardFilterUsers text={'Contratantes'} quantid={3} isSelected/>
         <CardFilterUsers text={'Médicos'} quantid={3} />
       </ContainerCardFilter>
     <ContainerTble style={{ borderRadius: '0px 24px 24px 24px' }}>
+
+    <ContainerFilter>
+        <FilterSearch/>
+        <AddButton>Novo Plano</AddButton>
+        </ContainerFilter>
+
       <DataTable
         data={planos}
         columns={["Plano", "Valor", "Preço Promocional", "Situação", "Açãoes"]}

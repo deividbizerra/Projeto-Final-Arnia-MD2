@@ -7,6 +7,7 @@ import Plans from "../../pages/plans";
 import Specialties from "../../pages/specialties";
 import Notifications from "../../pages/notifications";
 import Faq from "../../pages/faq";
+import Newspecialty from "../../pages/specialties/newSpecialty";
 
 const Router = () => {
   return (
@@ -19,8 +20,10 @@ const Router = () => {
           <Route path="registered-user" element={<UserCadrast />} />
           <Route path="plans" element={<Plans />} />
           <Route path="specialties" element={<Specialties />} />
+
           <Route path="notifications" element={<Notifications />} />
           <Route path="faq" element={<Faq />} />
+          <Route path="new-specialty" element={<Newspecialty />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -11,6 +11,7 @@ margin-top: 30px;
   td {
     padding: 10px;
     text-align: left;
+    width: 5rem;
   }
 
   th {
@@ -28,4 +29,6 @@ margin-top: 30px;
     border-radius: 0 16px 0 0;
   }
 `;
+
+
 
