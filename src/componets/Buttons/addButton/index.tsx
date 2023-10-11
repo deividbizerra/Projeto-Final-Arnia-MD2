@@ -1,15 +1,16 @@
-import React, { ReactNode } from 'react'; // Importe React e ReactNode
-import AddIcon from '@mui/icons-material/Add';
-import { ButtonStyle } from './styled';
+import React, { ReactNode } from "react"; // Importe React e ReactNode
+import AddIcon from "@mui/icons-material/Add";
+import { ButtonStyle } from "./styled";
 
 interface AddButtonProps {
   children: ReactNode;
+  onClick?: () => void;
 }
 
-const AddButton: React.FC<AddButtonProps> = ({ children }) => {
+const AddButton: React.FC<AddButtonProps> = ({ children, onClick }) => {
   return (
     <>
-      <ButtonStyle>
+      <ButtonStyle onClick={onClick}>
         <AddIcon />
         {children}
       </ButtonStyle>

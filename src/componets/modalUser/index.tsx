@@ -3,7 +3,7 @@ import { Person as PersonIcon } from "@mui/icons-material";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { Link } from "react-router-dom";
 
-const UserMenu:React.FC<UserMenuProps> = ({ isOpen }) => {
+const UserMenu:React.FC<ModalProps> = ({ isOpen }) => {
   if (!isOpen) return null;
 
   return (

@@ -1,6 +1,6 @@
 import CardsUserHome from "../../componets/cardInformation";
 import PersonSearchIcon from "@mui/icons-material/PersonSearch";
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import {
   CardWelcome,
   DivDate,
@@ -15,14 +15,65 @@ import {
 } from "./style";
 import TodayIcon from "@mui/icons-material/Today";
 import GroupIcon from "@mui/icons-material/Group";
-import { dadosUsuarios } from "../registeredUser";
 import { Link } from "react-router-dom";
-import DataTable from "../../componets/table";
+import { useEffect, useState } from "react";
+import { usersDashBoard } from "../../config/service/usersDashbord";
+import { usersRegister } from "../../config/service/usersRegiste";
+import Table from "../../componets/newTable";
+
 const Home = () => {
   const currentDate = new Date();
   const formattedDate = currentDate.toLocaleDateString("pt-BR");
+  const [userDashboard, setUserDashboard] = useState<usersDashBoard | null>(
+    null
+  );
+  const [, setUserData] = useState<[]>([]);
+  const [userDataProcessed, setUserDataProcessed] = useState<[]>([]);
 
-  const dadosUsuariosLimitados = dadosUsuarios.slice(0, 4);
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const userDataResponse = await usersRegister();
+        if (userDataResponse) {
+          setUserData(userDataResponse.content);
+          let dataTemp: any = [];
+          userDataResponse.content.forEach((item: any) => {
+            dataTemp.push({
+              user: `${item.firstName} ${item.lastName}`,
+              email: item.email,  
+              whatsapp: item.phone,
+              userType: item.profiles.length > 0 ? item.profiles[0].name : "",
+            });
+          });
+          setUserDataProcessed(dataTemp);
+          console.log(userDataResponse.content);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    async function fetchUserData() {
+      try {
+        const data: usersDashBoard = await usersDashBoard();
+        if (data) {
+          setUserDashboard(data);
+        }
+      } catch (error) {
+        console.log("Erro ao buscar os dados do usuário:", error);
+      }
+    }
+
+    fetchUserData();
+  }, []);
+
+  const dadosUsuariosLimitados = userDataProcessed.slice(0, 4);
+
+  const Columns = ["Usuário", "E-mail", "WhatsApp", "Tipo de usuario"];
 
   return (
     <>
@@ -39,9 +90,9 @@ const Home = () => {
             <TodayIcon /> {formattedDate}
           </DivDate>
 
-          <h2>Seja bem vinda!</h2>
+          <h2>Seja bem-vindo!</h2>
           <p>
-            Neste painel você poderá administrar seu site de forma simples e
+            Neste painel, você poderá administrar seu site de forma simples e
             prática.
           </p>
         </CardWelcome>
@@ -54,22 +105,22 @@ const Home = () => {
                 <CardsUserHome
                   icon={<GroupIcon />}
                   title="Total"
-                  content="1000"
+                  content={userDashboard?.doctor.total ?? 0}
                   variant="blue"
                 />
               </Box>
               <Box>
                 <CardsUserHome
                   icon={<GroupIcon />}
-                  title="Disponivel"
-                  content="900"
+                  title="Disponível"
+                  content={userDashboard?.doctor.available ?? 0}
                 />
               </Box>
               <Box>
                 <CardsUserHome
                   icon={<GroupIcon />}
-                  title="Indesponível"
-                  content="1000"
+                  title="Indisponível"
+                  content={userDashboard?.doctor.unavailable ?? 0}
                   variant="red"
                 />
               </Box>
@@ -84,7 +135,7 @@ const Home = () => {
                 <CardsUserHome
                   icon={<PersonSearchIcon />}
                   title="Total"
-                  content="1000"
+                  content={userDashboard?.contractor.total ?? 0}
                   variant="yellow"
                 />
               </Box>
@@ -92,7 +143,7 @@ const Home = () => {
                 <CardsUserHome
                   icon={<PersonSearchIcon />}
                   title="Ativos"
-                  content="1000"
+                  content={userDashboard?.contractor.available ?? 0}
                 />
               </Box>
 
@@ -100,7 +151,7 @@ const Home = () => {
                 <CardsUserHome
                   icon={<PersonSearchIcon />}
                   title="Inativos"
-                  content="1000"
+                  content={userDashboard?.contractor.unavailable ?? 0}
                   variant="red"
                 />
               </Box>
@@ -112,11 +163,13 @@ const Home = () => {
       <ContainerTble className="teste">
         <BoxInformationTable>
           <h2>Últimos usuários cadastrados</h2>
-          <Link to="registered-user">Ver tudo <ArrowForwardIcon style={{ width: '20px', height:"20px" }}/></Link>
+          <Link to="registered-user">
+            Ver tudo{" "}
+            <ArrowForwardIcon style={{ width: "20px", height: "20px" }} />
+          </Link>
         </BoxInformationTable>
         <div>
-          <DataTable  data={dadosUsuariosLimitados} columns={["Usuário", "E-mail", "WhatsApp", "Tipo de Usuário"]}
- />
+          <Table columns={Columns} data={dadosUsuariosLimitados} />
         </div>
       </ContainerTble>
     </>

@@ -7,7 +7,11 @@ import Plans from "../../pages/plans";
 import Specialties from "../../pages/specialties";
 import Notifications from "../../pages/notifications";
 import Faq from "../../pages/faq";
-import Newspecialty from "../../pages/specialties/newSpecialty";
+import Newspecialty from "../../pages/newSpecialty";
+import NewNotification from "../../pages/newNotification";
+import NewFaq from "../../pages/newFaq";
+import UserData from "../../pages/userData";
+import Editspecialty from "../../pages/editSpecialty";
 
 const Router = () => {
   return (
@@ -20,10 +24,13 @@ const Router = () => {
           <Route path="registered-user" element={<UserCadrast />} />
           <Route path="plans" element={<Plans />} />
           <Route path="specialties" element={<Specialties />} />
-
           <Route path="notifications" element={<Notifications />} />
           <Route path="faq" element={<Faq />} />
+          <Route path="new-faq" element={<NewFaq />} />
           <Route path="new-specialty" element={<Newspecialty />} />
+          <Route path="edit-specialty/:id" element={<Editspecialty />} />
+          <Route path="new-notifications" element={<NewNotification />} />
+          <Route path="userData" element={<UserData />} />
         </Route>
       </Routes>
     </BrowserRouter>

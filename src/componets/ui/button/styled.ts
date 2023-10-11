@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 export const StyledButton = styled.button<{ variant: "MAIN" | "SECONDARY" }>`
   display: flex;
-  width: 400px;
+  width: 100%;
   height: 56px;
   padding: 12px 64px;
   justify-content: center;

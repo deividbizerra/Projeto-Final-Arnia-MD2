@@ -15,6 +15,11 @@ const TablePagination: React.FC<TablePaginationProps> = ({ data, itemsPerPage, r
     setCurrentPage(newPage);
   };
 
+  // Ensure that data is always an array, and add a loading check
+  if (!Array.isArray(data) || data.length === 0) {
+    return <div>Loading...</div>; // You can customize the loading indicator here
+  }
+
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const displayedData = data.slice(startIndex, endIndex);
@@ -22,7 +27,7 @@ const TablePagination: React.FC<TablePaginationProps> = ({ data, itemsPerPage, r
   return (
     <div>
       {renderTable(displayedData)}
-      <Stack spacing={2}>   
+      <Stack spacing={2}>
         <StyledPagination
           count={Math.ceil(data.length / itemsPerPage)}
           page={currentPage}

@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import { Checkbox, FormControlLabel } from "@mui/material";
 import { StyledButton } from "../../componets/ui/button/styled";
 import { Input } from "../../componets/ui/input/styled";
@@ -7,8 +7,9 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import { ApiLogin } from "../../config/service/login";
 
-const Login: React.FC = () => {
+const Login = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [emailError, setEmailError] = useState<boolean>(false);
@@ -26,7 +27,7 @@ const Login: React.FC = () => {
     setPasswordError(false);
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!email) {
@@ -38,11 +39,23 @@ const Login: React.FC = () => {
     }
 
     if (email && password) {
-      toast("Login efetuado com sucesso!");
+      try {
+        const loginSuccess = await ApiLogin(email, password);
 
-      setTimeout(() => {
-        navigate("/home");
-      }, 2000);
+        if (loginSuccess) {
+          toast("Login efetuado com sucesso!");
+
+          setTimeout(() => {
+            navigate("/home");
+          }, 2000);
+        } else {
+          toast.error(
+            "Login falhou: Usuário não encontrado ou senha incorreta."
+          );
+        }
+      } catch (error) {
+        toast.error("Erro ao fazer login!");
+      }
     }
   };
 
