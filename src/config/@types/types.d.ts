@@ -48,7 +48,16 @@ type UserType = {
   enabled: boolean
   title:string;
   sendingDate:string;
+  period:string
+  values:number
 };
+type ProcessPlans = {
+  planTitle: string,
+  enabled: boolean,
+  period: string,
+  type: string,
+  values: number
+}
 
 type ProcessedUserType = {
   user: string;

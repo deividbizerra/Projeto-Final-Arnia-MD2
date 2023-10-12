@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const CardWelcome = styled.div`
-  width: 440px;
   height: 340px;
   box-shadow: 0px 7px 30px 0px rgba(187, 192, 205, 0.4);
   background-color: ${({ theme }) => theme.colors.darkGreen};
@@ -44,7 +43,6 @@ export const DivDate = styled.div`
 
 export const ContainerHome = styled.div`
   display: flex;
-  gap: 30px;
   margin-bottom: 20px;
 `;
 

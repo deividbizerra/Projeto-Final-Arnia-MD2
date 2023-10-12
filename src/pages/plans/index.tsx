@@ -1,83 +1,111 @@
-import React from 'react';
+import{ useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import AddButton from "../../componets/Buttons/addButton";
-import { CardFilterUsers } from "../../componets/cardFilterUsers";
 import { ContDescription } from "../../componets/contetDescription";
 import FilterSearch from "../../componets/filterSearch";
-import DataTable from "../../componets/table";
 import { ContainerTble } from "../dashBord/style";
 import { ContainerCardFilter, ContainerFilter } from "../registeredUser/styled";
+import { deleteSpecialty } from "../../config/service/specialties";
+import Table from "../../componets/newTable";
+import { IOSSwitch } from "../../componets/switch";
+import CustomIconButtons from "../../componets/ui/icons";
+import { getPlans } from "../../config/service/plans";
+import { CardFilterUsers } from "../../componets/cardFilterUsers";
 
 const Plans = () => {
-  const [selectedTab, setSelectedTab] = React.useState('Contratantes'); // Inicialmente, 'Contratantes' está selecionado
+  const Columns = ["Plano", "Valor", "Situação", "Ações"];
+  const navigation = useNavigate();
+  const [userData, setUserData] = useState<ProcessPlans[]>([]);
+  const [selectedTab, setSelectedTab] = useState("CONTRATANTE");
 
-  const planos = [
-    {
-      plano: "Plano A",
-      valor: 100.0,
-      precoPromocional: 80.0,
-      situacao: true,
-      categoria: 'Contratantes', // Categoria do plano
-    },
-    {
-      plano: "Plano B",
-      valor: 150.0,
-      precoPromocional: 120.0,
-      situacao: false,
-      categoria: 'Contratantes', // Categoria do plano
-    },
-    {
-      plano: "Plano C",
-      valor: 120.0,
-      precoPromocional: 100.0,
-      situacao: true,
-      categoria: 'Médicos', // Categoria do plano
-    },
-    {
-      plano: "Plano D",
-      valor: 180.0,
-      precoPromocional: 150.0,
-      situacao: false,
-      categoria: 'Médicos', // Categoria do plano
-    },
-  ];
+  console.log(selectedTab);
 
-  // Função para filtrar os planos com base na categoria
-  const filteredPlanos = (categoria:string) => {
-    return planos.filter((plano) => plano.categoria === categoria);
+  const fetchData = async () => {
+    try {
+      const userDataResponse = await getPlans();
+
+      if (userDataResponse) {
+        setUserData(
+          userDataResponse.content.map((item: ProcessPlans) => ({
+            period: `${item.period}`,
+            values: item.values,
+            status: (
+              <div>
+                <IOSSwitch sx={{ m: 1 }} checked={item.enabled} />
+                {item.enabled ? "Ativo" : "Inativo"}
+              </div>
+            ),
+            actions: (
+              <CustomIconButtons
+                id={item.id}
+                onEdit={() => handleEdit(item)}
+                onDelete={() => handleDelete(item.id)}
+              />
+            ),
+            type: `${item.type}`,
+          }))
+        );
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
+  useEffect(() => {
+    fetchData();
+  }, []);
 
+  const handleEdit = (specialty: any) => {
+    navigation(`/home/edit-specialty/${specialty.id}`);
+  };
+
+  const handleDelete = async (id: string | number) => {
+    try {
+      await deleteSpecialty(id);
+      fetchData();
+      console.log(`Excluiu a especialidade com ID ${id}`);
+    } catch (error) {
+      console.error("Erro ao excluir a especialidade:", error);
+    }
+  };
+
+  const filteredPlanos = (categoria) => {
+    if (categoria === "MEDICO") {
+      return userData.filter((plano) => plano.type === "MEDICO");
+    } else if (categoria === "CONTRATANTE") {
+      return userData.filter((plano) => plano.type === "CONTRATANTE");
+    }
+  };
+
+  console.log(filteredPlanos(selectedTab));
 
   return (
     <>
-      <ContDescription description="Planos" text="" />
+      <ContDescription description="Planos" />
 
       <ContainerCardFilter>
         <CardFilterUsers
           text="Contratantes"
-          isSelected={selectedTab === 'Contratantes'}
-          onClick={() => setSelectedTab('Contratantes')}
+          isSelected={selectedTab === "CONTRATANTE"}
+          onClick={() => setSelectedTab("CONTRATANTE")}
           quantid={5}
         />
         <CardFilterUsers
           text="Médicos"
-          isSelected={selectedTab === 'Médicos'}
-          onClick={() => setSelectedTab('Médicos')
-          
-        }
-        quantid={0}
+          isSelected={selectedTab === "MEDICO"}
+          onClick={() => setSelectedTab("MEDICO")}
+          quantid={0}
         />
       </ContainerCardFilter>
-      <ContainerTble style={{ borderRadius: '0px 24px 24px 24px' }}>
+      <ContainerTble style={{ marginTop: "32px" }}>
         <ContainerFilter>
           <FilterSearch />
-          <AddButton>Novo Plano</AddButton>
+          <Link to={`/home/new-plans?type=${selectedTab}`}>
+            <AddButton>Novo Plano</AddButton>
+          </Link>
         </ContainerFilter>
 
-        <DataTable
-          data={filteredPlanos(selectedTab)}
-          columns={["Plano", "Valor", "Preço Promocional", "Situação", "Ações"]}
-        />
+        <Table columns={Columns} data={filteredPlanos(selectedTab)} />
       </ContainerTble>
     </>
   );

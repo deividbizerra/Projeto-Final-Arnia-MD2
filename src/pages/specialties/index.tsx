@@ -17,8 +17,8 @@ const Specialties = () => {
   const Columns = ["Nome especialidade", "Situação", "Ações"];
   const navigation = useNavigate();
   const [userData, setUserData] = useState<ProcessedUserType[]>([]);
-  const [filteredData, setFilteredData] = useState<ProcessedUserType[]>([]); // Dados filtrados
   const [searchTerm, setSearchTerm] = useState("");
+  const [filteredData, setFilteredData] = useState<ProcessedUserType[]>([]); // Dados filtrados
 
   const handleSearch = (newSearchTerm: string) => {
     setSearchTerm(newSearchTerm);

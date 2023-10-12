@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const ContainerSidbar = styled.div`
-width: 20rem;
+width: 20.7rem;
 min-height: 100vh;
   background: ${({ theme }) => theme.colors.darkGreen};
   color: white;
