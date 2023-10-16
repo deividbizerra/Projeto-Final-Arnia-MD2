@@ -19,7 +19,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { usersDashBoard } from "../../config/service/usersDashbord";
 import { usersRegister } from "../../config/service/usersRegiste";
-import Table from "../../componets/newTable";
+import Table from "../../componets/Table";
 
 const Home = () => {
   const currentDate = new Date();

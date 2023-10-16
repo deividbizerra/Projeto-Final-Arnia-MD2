@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { ContDescription } from "../../componets/contetDescription";
 import { ContainerTble } from "../dashBord/style";
 import { ContainerCardFilter, ContainerTotal } from "./styled";
-import { usersRegister } from "../../config/service/usersRegiste";
-import Table from "../../componets/newTable";
+import { userSearch, usersRegister } from "../../config/service/usersRegiste";
+import Table from "../../componets/Table";
 import TablePagination from "../../componets/tableWithPaginationProps";
 import { CardFilterUsers } from "../../componets/cardFilterUsers";
 import FilterSearch from "../../componets/filterSearch";
@@ -17,6 +17,8 @@ const UserCadrast = () => {
   const [totalUsers, setTotalUsers] = useState(0);
   const [totalContratantes, setTotalContratantes] = useState(0);
   const [totalMedicos, setTotalMedicos] = useState(0);
+  const [, setSearchTerm] = useState("");
+
   const Columns = [
     "Usuário",
     "E-mail",
@@ -47,7 +49,6 @@ const UserCadrast = () => {
           );
           setUserDataProcessed(dataTemp);
 
-         
           setTotalUsers(userDataResponse.content.length);
           setTotalContratantes(
             dataTemp.filter((user) => user.userType === "CONTRATANTE").length
@@ -64,6 +65,28 @@ const UserCadrast = () => {
     fetchData();
   }, []);
 
+  const handleSearch = async (searchTerm: string) => {
+    setSearchTerm(searchTerm);
+
+    try {
+      const userDataResponse = await userSearch(searchTerm);
+      if (userDataResponse) {
+        const dataTemp: ProcessedUserType[] = userDataResponse.content.map((item: UserType) => ({
+          user: `${item.firstName} ${item.lastName}`,
+          email: item.email,
+          whatsapp: item.phone,
+          specialties: item.specialties,
+          city: item.city,
+          state: item.state,
+          userType: item.profiles.length > 0 ? item.profiles[0].name : "",
+        }));
+        setUserDataProcessed(dataTemp);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const countFilteredUsers = (filter: string) => {
     if (filter === "Contratantes") {
       return totalContratantes;
@@ -73,7 +96,7 @@ const UserCadrast = () => {
       return totalUsers;
     }
   };
-  
+
   const filteredData = userDataProcessed.filter((user) => {
     if (descriptionText === 'Todos') {
       return true;
@@ -84,7 +107,6 @@ const UserCadrast = () => {
     }
     return false;
   });
-
 
   return (
     <>
@@ -115,9 +137,8 @@ const UserCadrast = () => {
       <ContainerTble style={{ borderRadius: "0px 24px 24px 24px" }}>
         <ContainerTotal>
           <div>
-            <FilterSearch  />
+            <FilterSearch onSearch={handleSearch} />
           </div>
-
           <div>
             <p>Total de usuários</p>
             <h3>{countFilteredUsers(descriptionText)}</h3>

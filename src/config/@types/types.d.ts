@@ -32,7 +32,6 @@ interface usersDashBoard {
   };
 }
 
-
 // Define the types for your data
 type UserType = {
   id: number;
@@ -40,41 +39,41 @@ type UserType = {
   lastName: string;
   email: string;
   phone: string;
-  specialties: string; 
-  city: string; 
-  state: string; 
+  specialties: string;
+  city: string;
+  state: string;
   profiles: { name: string; authority: string }[];
-  name: string
-  enabled: boolean
-  title:string;
-  sendingDate:string;
-  period:string
-  values:number
+  name: string;
+  enabled: boolean;
+  title: string;
+  sendingDate: string;
+  period: string;
+  values: number;
 };
 type ProcessPlans = {
-  planTitle: string,
-  enabled: boolean,
-  period: string,
-  type: string,
-  values: number
-}
+  id: number;
+  planTitle: string;
+  enabled: boolean;
+  period: string;
+  type: string;
+  values: number;
+};
 
 type ProcessedUserType = {
   user: string;
   email: string;
   whatsapp: string;
-  specialties: string; 
-  city: string; 
-  state: string; 
+  specialties: string;
+  city: string;
+  state: string;
   userType: string;
-  name: string
+  name: string;
 };
 
 type ProcessedSpecialties = {
-  name: string
-  active: boolean
-}
-
+  name: string;
+  active: boolean;
+};
 
 type TablePaginationProps = {
   data: UserData[];

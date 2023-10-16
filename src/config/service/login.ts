@@ -40,7 +40,7 @@ export const ApiLogin = async (
 
 export const ApiFindUser = async () => {
   try {
-    const response: AxiosResponse<any> = await api.get(`me`, {
+    const response = await api.get(`me`, {
       headers: {
         Authorization: localStorage.getItem("token"),
       },
@@ -48,7 +48,7 @@ export const ApiFindUser = async () => {
     const userData = response.data;
     return userData;
   } catch (e) {
-    console.logr("Erro ao verificar o usuário:", e);
+    console.log("Erro ao verificar o usuário:", e);
     return null;
   }
 };

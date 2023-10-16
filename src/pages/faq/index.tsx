@@ -5,7 +5,7 @@ import { ContDescription } from "../../componets/contetDescription";
 import FilterSearch from "../../componets/filterSearch";
 import { ContainerTble } from "../dashBord/style";
 import { ContainerFilter } from "../registeredUser/styled";
-import Table from "../../componets/newTable";
+import Table from "../../componets/Table";
 import CustomIconButtons from "../../componets/ui/icons";
 import { questions } from "../../config/service/questions";
 

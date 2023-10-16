@@ -9,7 +9,7 @@ import {
   getSpecialties,
   deleteSpecialty,
 } from "../../config/service/specialties";
-import Table from "../../componets/newTable";
+import Table from "../../componets/Table";
 import { IOSSwitch } from "../../componets/switch";
 import CustomIconButtons from "../../componets/ui/icons";
 

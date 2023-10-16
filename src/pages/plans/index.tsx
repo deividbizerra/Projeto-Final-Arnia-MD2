@@ -1,19 +1,18 @@
-import{ useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AddButton from "../../componets/Buttons/addButton";
 import { ContDescription } from "../../componets/contetDescription";
 import FilterSearch from "../../componets/filterSearch";
 import { ContainerTble } from "../dashBord/style";
 import { ContainerCardFilter, ContainerFilter } from "../registeredUser/styled";
-import { deleteSpecialty } from "../../config/service/specialties";
-import Table from "../../componets/newTable";
+import { deletePlans, getPlans } from "../../config/service/plans";
+import Table from "../../componets/Table";
 import { IOSSwitch } from "../../componets/switch";
 import CustomIconButtons from "../../componets/ui/icons";
-import { getPlans } from "../../config/service/plans";
 import { CardFilterUsers } from "../../componets/cardFilterUsers";
 
 const Plans = () => {
-  const Columns = ["Plano", "Valor", "Situação", "Ações"];
+  const Columns = ["Plano", "Valor", "Situação", "Ações", "Tipo de usuário"];
   const navigation = useNavigate();
   const [userData, setUserData] = useState<ProcessPlans[]>([]);
   const [selectedTab, setSelectedTab] = useState("CONTRATANTE");
@@ -38,7 +37,7 @@ const Plans = () => {
             actions: (
               <CustomIconButtons
                 id={item.id}
-                onEdit={() => handleEdit(item)}
+                onEdit={() => handleEdit(item.id)}
                 onDelete={() => handleDelete(item.id)}
               />
             ),
@@ -55,17 +54,17 @@ const Plans = () => {
     fetchData();
   }, []);
 
-  const handleEdit = (specialty: any) => {
-    navigation(`/home/edit-specialty/${specialty.id}`);
+  const handleEdit = (id) => {
+    navigation(`/home/edit-plans?type=${selectedTab}&id=${id}`);
   };
 
   const handleDelete = async (id: string | number) => {
     try {
-      await deleteSpecialty(id);
+      await deletePlans(id);
       fetchData();
-      console.log(`Excluiu a especialidade com ID ${id}`);
+      console.log(`Excluiu o plano com ID ${id}`);
     } catch (error) {
-      console.error("Erro ao excluir a especialidade:", error);
+      console.error("Erro ao excluir o plano:", error);
     }
   };
 

@@ -100,7 +100,7 @@ const Newspecialty = () => {
         <h2>Especialidade salva com sucesso!</h2>
       </Modal>
 
-      <ToastContainer /> {/* Adicione o ToastContainer aqui para exibir toasts de erro */}
+      <ToastContainer /> 
     </>
   );
 };

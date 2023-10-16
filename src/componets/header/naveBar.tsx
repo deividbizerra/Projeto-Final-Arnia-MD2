@@ -7,7 +7,7 @@ import { ApiFindUser } from "../../config/service/login";
 
 const NaveBar = () => {
   const [isMenuOpen, setMenuOpen] = useState(false);
-  const [userData, setUserData] = useState<UserData | null>();
+  const [userData, setUserData] = useState<UserData>();
 
   const toggleMenu = () => {
     setMenuOpen(!isMenuOpen);
@@ -21,7 +21,7 @@ const NaveBar = () => {
           setUserData(data);
         }
       } catch (error) {
-        console.logr("Erro ao buscar os dados do usuário:", error);
+        console.log("Erro ao buscar os dados do usuário:", error);
       }
     }
 
