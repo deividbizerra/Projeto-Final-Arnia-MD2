@@ -1,9 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { H1 } from "../newSpecialty/styled";
-import { createPlanos } from "../../config/service/plans";
+import { updatePlans, getPlansById } from "../../config/service/plans";
 import "react-toastify/dist/ReactToastify.css";
-import { BoxNewPlans } from "./styled";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -16,6 +15,7 @@ import { IOSSwitch } from "../../componets/switch";
 import { ButtonSave } from "../../componets/Buttons/saveButton/styled";
 import Modal from "../../componets/modalSave";
 import { Box } from "@mui/material";
+import { BoxNewPlans } from "../newPlans/styled";
 
 interface Option {
   label: string;
@@ -48,9 +48,10 @@ const StyledSelect: React.FC<{
   );
 };
 
-const NewPlan = () => {
+const EditPlan = () => {
   const location = useLocation();
   const type = new URLSearchParams(location.search).get("type");
+  const planId = new URLSearchParams(location.search).get("id");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [period, setPeriod] = useState("mensal");
   const [values, setValues] = useState("");
@@ -58,37 +59,58 @@ const NewPlan = () => {
   const [checked, setChecked] = useState(false);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    // Fetch the existing plan data
+    if (planId) {
+      getPlansById(planId).then((planData) => {
+        if (planData) {
+          setPlanTitle(planData.period);
+          setPeriod(planData.period);
+          setValues(planData.values);
+          setChecked(planData.enabled);
+        } else {
+          // Handle error when fetching data
+          console.error("Error fetching plan data.");
+        }
+      });
+    }
+  }, [planId]);
+
   const handleSaveClick = async () => {
     if (!values) {
       toast.error("O campo 'Valor' é obrigatório.");
-      return false;
+      return;
     }
 
     try {
-      // Construct an object with the data of the new plan
-      const newPlanData = {
-        type: type,
+      // Construct an object with the updated plan data
+      const updatedPlanData = {
         planTitle: planTitle,
         period: period,
         values: values,
         enabled: checked,
+        type: type, // Inclua o tipo (type) no objeto de dados
       };
 
-      const response = await createPlanos(newPlanData);
-
-      if (response) {
-        toast.success("Plano salvo com sucesso!");
-        setIsModalOpen(true);
-        setTimeout(() => {
-          setIsModalOpen(false);
-          navigate("/home/plans");
-        }, 1500);
+      // Update the plan
+      if (planId) {
+        const response = await updatePlans(planId, updatedPlanData);
+        if (response) {
+          toast.success("Plano atualizado com sucesso!");
+          setIsModalOpen(true);
+          setTimeout(() => {
+            setIsModalOpen(false);
+            navigate("/home/plans");
+          }, 1500);
+        } else {
+          toast.error("Erro ao atualizar o plano. Tente novamente.");
+        }
+      } else {
+        toast.error("ID do plano não encontrado.");
       }
     } catch (error) {
-      console.error("Erro ao criar plano:", error);
-      toast.error(
-        "Ocorreu um erro ao criar o plano. Por favor, tente novamente."
-      );
+      console.error("Erro ao atualizar plano:", error);
+      toast.error("Ocorreu um erro ao atualizar o plano. Tente novamente.");
     }
   };
 
@@ -102,7 +124,7 @@ const NewPlan = () => {
 
   return (
     <>
-      <ReturnButton link="/home/plans">Novo Plano - {type}</ReturnButton>
+      <ReturnButton link="/home/plans">Editar Plano - {type}</ReturnButton>
       <ContainerTble>
         <H1>Dados do plano</H1>
 
@@ -155,10 +177,10 @@ const NewPlan = () => {
         <ButtonSave onClick={handleSaveClick}>Salvar</ButtonSave>
       </ContainerTble>
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
-        <h2>Plano salvo com sucesso!</h2>
+        <h2>Plano atualizado com sucesso!</h2>
       </Modal>
     </>
   );
 };
 
-export default NewPlan;
+export default EditPlan;

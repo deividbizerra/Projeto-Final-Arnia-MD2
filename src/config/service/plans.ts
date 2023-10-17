@@ -73,3 +73,23 @@ export const getPlansById = async (id: number | string) => {
     throw error;
   }
 };
+
+
+export const plansSearch = async (searchs: string | null) => {
+  try {
+    let search = "";
+    if (searchs) {
+      search = `search=${searchs}`; 
+    }
+    const response: AxiosResponse = await api.get(`plans?${search}`, {
+      headers: {
+        Authorization: localStorage.getItem("token"),
+      },
+    });
+    const userData = response.data;
+    return userData;
+  } catch (e) {
+    console.log("Erro ao encontrar planos:", e);
+    return null;
+  }
+};

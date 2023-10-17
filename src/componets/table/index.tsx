@@ -4,8 +4,8 @@ import { Tabela } from "./styled";
 type TableRow = Record<string, string | number | ReactNode>;
 
 type TableProps = {
-  columns: string[];
-  data: TableRow[];
+  columns: string[] ;
+  data: TableRow[] ;
 };
 
 const Table = ({ columns, data }: TableProps) => {

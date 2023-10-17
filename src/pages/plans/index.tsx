@@ -22,12 +22,15 @@ const Plans = () => {
   const fetchData = async () => {
     try {
       const userDataResponse = await getPlans();
-
+  
       if (userDataResponse) {
         setUserData(
           userDataResponse.content.map((item: ProcessPlans) => ({
             period: `${item.period}`,
-            values: item.values,
+            values: new Intl.NumberFormat('pt-BR', {
+              style: 'currency',
+              currency: 'BRL'
+            }).format(item.values), // Format values as currency
             status: (
               <div>
                 <IOSSwitch sx={{ m: 1 }} checked={item.enabled} />
@@ -37,7 +40,7 @@ const Plans = () => {
             actions: (
               <CustomIconButtons
                 id={item.id}
-                onEdit={() => handleEdit(item.id)}
+                onEdit={() => handleEdit(item.id, item.type)}
                 onDelete={() => handleDelete(item.id)}
               />
             ),
@@ -49,14 +52,14 @@ const Plans = () => {
       console.log(error);
     }
   };
-
+  
   useEffect(() => {
     fetchData();
   }, []);
 
-  const handleEdit = (id) => {
-    navigation(`/home/edit-plans?type=${selectedTab}&id=${id}`);
-  };
+
+  
+
 
   const handleDelete = async (id: string | number) => {
     try {
@@ -68,7 +71,7 @@ const Plans = () => {
     }
   };
 
-  const filteredPlanos = (categoria) => {
+  const filteredPlanos = (categoria:string) => {
     if (categoria === "MEDICO") {
       return userData.filter((plano) => plano.type === "MEDICO");
     } else if (categoria === "CONTRATANTE") {
@@ -76,8 +79,14 @@ const Plans = () => {
     }
   };
 
-  console.log(filteredPlanos(selectedTab));
+  const handleEdit = (id: number, userType: string) => {
+    navigation(`/home/edit-plans?type=${userType}&id=${id}`);
+  };
+  
+  
 
+  const contratantePlanos = filteredPlanos("CONTRATANTE");
+  const medicoPlanos = filteredPlanos("MEDICO");
   return (
     <>
       <ContDescription description="Planos" />
@@ -87,13 +96,13 @@ const Plans = () => {
           text="Contratantes"
           isSelected={selectedTab === "CONTRATANTE"}
           onClick={() => setSelectedTab("CONTRATANTE")}
-          quantid={5}
+          quantid={contratantePlanos?.length}
         />
         <CardFilterUsers
           text="Médicos"
           isSelected={selectedTab === "MEDICO"}
           onClick={() => setSelectedTab("MEDICO")}
-          quantid={0}
+          quantid={medicoPlanos?.length}
         />
       </ContainerCardFilter>
       <ContainerTble style={{ marginTop: "32px" }}>
@@ -104,7 +113,7 @@ const Plans = () => {
           </Link>
         </ContainerFilter>
 
-        <Table columns={Columns} data={filteredPlanos(selectedTab)} />
+        <Table columns={Columns} data={filteredPlanos(selectedTab) ?? []} />
       </ContainerTble>
     </>
   );

@@ -35,17 +35,17 @@ const NaveBar = () => {
           <PersonOutlinedIcon />
         </span>
         <div>
-          {userData ? (
-            <>
-              <h3>{`${userData.firstName} ${userData.lastName}`} <KeyboardArrowDownIcon onClick={toggleMenu}/></h3>
-              <p>{userData.email}</p>
-            </>
-          ) : (
-            <>
-              <h3>Carregando...</h3>
-              <p>Carregando...</p>
-            </>
-          )}
+          
+          
+        <h3>
+  {userData && `${userData.firstName} ${userData.lastName}`}
+  <KeyboardArrowDownIcon onClick={toggleMenu} />  
+</h3>
+<p>{userData?.email}</p>
+
+          
+          
+          
         </div>
       </ContainerUser>
       <UserMenu isOpen={isMenuOpen} onClose={toggleMenu} />
