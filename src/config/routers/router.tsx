@@ -14,6 +14,7 @@ import UserData from "../../pages/userData";
 import Editspecialty from "../../pages/editSpecialty";
 import NewPlan from "../../pages/newPlans";
 import EditPlan from "../../pages/editPlans";
+import ProfileEditing from "../../pages/user";
 
 const Router = () => {
   return (
@@ -24,6 +25,7 @@ const Router = () => {
         <Route path="/home" element={<BaseLayout />}>
           <Route index element={<Home />} />
           <Route path="registered-user" element={<UserCadrast />} />
+          <Route path="profile" element={<ProfileEditing />} />
           <Route path="plans" element={<Plans />} />
           <Route path="new-plans" element={<NewPlan />} />
           <Route path="edit-plans" element={<EditPlan />} />

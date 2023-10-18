@@ -63,7 +63,7 @@ const Specialties = () => {
     fetchData();
   }, []);
 
-  const handleEdit = (specialty: any) => {
+  const handleEdit = (specialty: { id: number }) => {
     navigation(`/home/edit-specialty/${specialty.id}`);
   };
 

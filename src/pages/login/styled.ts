@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import IconButton from "@mui/material/IconButton";
 export const ContainerLogin = styled.div`
   background-image: url(https://uploaddeimagens.com.br/images/004/616/041/original/Login.png?1695346298);
   background-repeat: no-repeat;
@@ -41,7 +41,7 @@ export const CheckboxLogin = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-
+  margin-top: 50px;
   p {
     font-size: ${({ theme }) => theme.fontSizes.md};
     color: ${({ theme }) => theme.colors.mediumGray2};
@@ -52,3 +52,35 @@ export const CheckboxLogin = styled.div`
     font-family: ${({ theme }) => theme.fonts.poppins};
   }
 `;
+
+export const StyledIconButton = styled(IconButton)`
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  input {
+    flex: 1;
+    border: none;
+    border-bottom: 1px solid ${({ theme }) => theme.colors.primary};
+    font-size: ${({ theme }) => theme.fontSizes.md};
+    padding-right: 30px;
+  }
+
+  svg {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    bottom: 55px;
+  }
+  bottom {
+  }
+`;
+
+export const VisiblePassword = styled.span`
+  left: 340px;
+  top: 60%;
+  position: relative;
+  width: 27px;
+  color: #bdbdbd;
+  cursor:pointer;
+  `;

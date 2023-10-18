@@ -13,6 +13,7 @@ const theme = {
     darkGray: "#212121",
     mediumGray: "#757575",
     mediumGray2: "#616161",
+    lightgray: "#EEE"
   },
   fontSizes: {
     sm: "14px",

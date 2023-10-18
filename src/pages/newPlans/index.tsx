@@ -65,7 +65,6 @@ const NewPlan = () => {
     }
 
     try {
-      // Construct an object with the data of the new plan
       const newPlanData = {
         type: type,
         planTitle: planTitle,
@@ -77,7 +76,6 @@ const NewPlan = () => {
       const response = await createPlanos(newPlanData);
 
       if (response) {
-        toast.success("Plano salvo com sucesso!");
         setIsModalOpen(true);
         setTimeout(() => {
           setIsModalOpen(false);
@@ -85,10 +83,10 @@ const NewPlan = () => {
         }, 1500);
       }
     } catch (error) {
-      console.error("Erro ao criar plano:", error);
       toast.error(
         "Ocorreu um erro ao criar o plano. Por favor, tente novamente."
       );
+      console.error("Erro ao criar plano:", error);
     }
   };
 

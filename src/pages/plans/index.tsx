@@ -22,14 +22,14 @@ const Plans = () => {
   const fetchData = async () => {
     try {
       const userDataResponse = await getPlans();
-  
+
       if (userDataResponse) {
         setUserData(
           userDataResponse.content.map((item: ProcessPlans) => ({
             period: `${item.period}`,
-            values: new Intl.NumberFormat('pt-BR', {
-              style: 'currency',
-              currency: 'BRL'
+            values: new Intl.NumberFormat("pt-BR", {
+              style: "currency",
+              currency: "BRL",
             }).format(item.values), // Format values as currency
             status: (
               <div>
@@ -52,14 +52,10 @@ const Plans = () => {
       console.log(error);
     }
   };
-  
+
   useEffect(() => {
     fetchData();
-  }, []);
-
-
-  
-
+  });
 
   const handleDelete = async (id: string | number) => {
     try {
@@ -71,7 +67,7 @@ const Plans = () => {
     }
   };
 
-  const filteredPlanos = (categoria:string) => {
+  const filteredPlanos = (categoria: string) => {
     if (categoria === "MEDICO") {
       return userData.filter((plano) => plano.type === "MEDICO");
     } else if (categoria === "CONTRATANTE") {
@@ -82,8 +78,6 @@ const Plans = () => {
   const handleEdit = (id: number, userType: string) => {
     navigation(`/home/edit-plans?type=${userType}&id=${id}`);
   };
-  
-  
 
   const contratantePlanos = filteredPlanos("CONTRATANTE");
   const medicoPlanos = filteredPlanos("MEDICO");

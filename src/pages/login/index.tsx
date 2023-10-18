@@ -1,8 +1,10 @@
 import { useState, ChangeEvent, FormEvent } from "react";
+import { FormControl } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Checkbox, FormControlLabel } from "@mui/material";
 import { StyledButton } from "../../componets/ui/button/styled";
 import { Input } from "../../componets/ui/input/styled";
-import { CheckboxLogin, ContainerLogin, Form } from "./styled";
+import { CheckboxLogin, ContainerLogin, Form, VisiblePassword } from "./styled";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -14,6 +16,7 @@ const Login = () => {
   const [password, setPassword] = useState<string>("");
   const [emailError, setEmailError] = useState<boolean>(false);
   const [passwordError, setPasswordError] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
@@ -25,6 +28,10 @@ const Login = () => {
   const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
     setPasswordError(false);
+  };
+
+  const handleShowPassword = () => {
+    setShowPassword(!showPassword);
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -78,16 +85,22 @@ const Login = () => {
           helperText={emailError ? <small>Campo obrigatório!</small> : ""}
           className="custom-input"
         />
-        <Input
-          variant="outlined"
-          label="Password"
-          type="password"
-          value={password}
-          onChange={handlePasswordChange}
-          error={passwordError}
-          helperText={passwordError ? <small>Campo obrigatório!</small> : ""}
-          className="custom-input"
-        />
+        <FormControl variant="outlined" className="custom-input">
+          <Input
+            style={{ position: "absolute" }}
+            variant="outlined"
+            label="Password"
+            type={showPassword ? "text" : "password"}
+            value={password}
+            onChange={handlePasswordChange}
+            error={passwordError}
+            helperText={passwordError ? <small>Campo obrigatório!</small> : ""}
+          />
+
+          <VisiblePassword onClick={handleShowPassword}>
+            {showPassword ? <VisibilityOff /> : <Visibility />}
+          </VisiblePassword>
+        </FormControl>
         <CheckboxLogin>
           <FormControlLabel control={<Checkbox />} label="Lembrar-me" />
           <p>Esqueci minha senha</p>

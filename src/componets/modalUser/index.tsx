@@ -1,9 +1,15 @@
-import { ModalContainer, UserInfo } from "./styled"; // Importe os estilos necessários
+import React from "react";
+import { ModalContainer, UserInfo } from "./styled";
 import { Person as PersonIcon } from "@mui/icons-material";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { Link } from "react-router-dom";
 
-const UserMenu:React.FC<ModalProps> = ({ isOpen }) => {
+type ModalProps = {
+  isOpen: boolean;
+  onClose: () => void;
+};
+
+const UserMenu: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
@@ -13,7 +19,9 @@ const UserMenu:React.FC<ModalProps> = ({ isOpen }) => {
           <PersonIcon />
         </span>
         <div>
-        <Link to="">Usuario</Link>
+          <Link to="profile" onClick={onClose}>
+            Usuário
+          </Link>
         </div>
       </UserInfo>
 
@@ -22,7 +30,9 @@ const UserMenu:React.FC<ModalProps> = ({ isOpen }) => {
           <LogoutIcon />
         </span>
         <div>
-          <Link to="/">Sair</Link>
+          <Link to="/" onClick={onClose}>
+            Sair
+          </Link>
         </div>
       </UserInfo>
     </ModalContainer>
