@@ -31,7 +31,10 @@ interface usersDashBoard {
     unavailable: number;
   };
 }
-
+interface Specialty {
+  name: string;
+  enabled: boolean;
+}
 // Define the types for your data
 type UserType = {
   id: number;

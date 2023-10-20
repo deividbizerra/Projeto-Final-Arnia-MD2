@@ -3,7 +3,7 @@ import api from "./config";
 
 export const usersRegister = async () => {
   try {
-    const response: AxiosResponse<any> = await api.get(`users`, {
+    const response: AxiosResponse = await api.get(`users`, {
       headers: {
         Authorization: localStorage.getItem("token"),
       },

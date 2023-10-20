@@ -3,7 +3,7 @@ import api from "./config";
 
 export const getSpecialties = async () => {
   try {
-    const response: AxiosResponse<any> = await api.get(`specialties`, {
+    const response: AxiosResponse = await api.get(`specialties`, {
       headers: {
         Authorization: localStorage.getItem("token"),
       },
@@ -17,7 +17,9 @@ export const getSpecialties = async () => {
   }
 };
 
-export const createSpecialty = async (specialtyData: any) => {
+
+
+export const createSpecialty = async (specialtyData:Specialty) => {
   try {
     const response = await api.post(`specialties`, specialtyData, {
       headers: {
@@ -46,7 +48,7 @@ export const deleteSpecialty = async (id: number | string) => {
 
 
 
-export const updateSpecialty = async (id: any, updatedData: any) => {
+export const updateSpecialty = async (id: number, updatedData: string) => {
   try {
     const response = await api.put(`specialties/${id}`, updatedData, {
       headers: {

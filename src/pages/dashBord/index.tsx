@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import CardsUserHome from "../../componets/cardInformation";
 import PersonSearchIcon from "@mui/icons-material/PersonSearch";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
@@ -16,19 +17,46 @@ import {
 import TodayIcon from "@mui/icons-material/Today";
 import GroupIcon from "@mui/icons-material/Group";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
 import { usersDashBoard } from "../../config/service/usersDashbord";
 import { usersRegister } from "../../config/service/usersRegiste";
 import Table from "../../componets/Table";
 
-const Home = () => {
+interface UserData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  profiles: { name: string }[];
+}
+
+interface ProcessedUserData {
+  user: string;
+  email: string;
+  whatsapp: string;
+  userType: string;
+}
+
+interface DashboardData {
+  doctor: {
+    total: number;
+    available: number;
+    unavailable: number;
+  };
+  contractor: {
+    total: number;
+    available: number;
+    unavailable: number;
+  };
+}
+
+const Home: React.FC = () => {
   const currentDate = new Date();
   const formattedDate = currentDate.toLocaleDateString("pt-BR");
-  const [userDashboard, setUserDashboard] = useState<usersDashBoard | null>(
-    null
+  const [userDashboard, setUserDashboard] = useState<DashboardData | null>(null);
+  const [, setUserData] = useState<UserData[]>([]);
+  const [userDataProcessed, setUserDataProcessed] = useState<ProcessedUserData[]>(
+    []
   );
-  const [, setUserData] = useState<[]>([]);
-  const [userDataProcessed, setUserDataProcessed] = useState<[]>([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -36,17 +64,17 @@ const Home = () => {
         const userDataResponse = await usersRegister();
         if (userDataResponse) {
           setUserData(userDataResponse.content);
-          let dataTemp: any = [];
-          userDataResponse.content.forEach((item: any) => {
-            dataTemp.push({
-              user: `${item.firstName} ${item.lastName}`,
-              email: item.email,  
-              whatsapp: item.phone,
-              userType: item.profiles.length > 0 ? item.profiles[0].name : "",
-            });
-          });
+          const dataTemp: ProcessedUserData[] = userDataResponse.content.map(
+            (item: UserData) => {
+              return {
+                user: `${item.firstName} ${item.lastName}`,
+                email: item.email,
+                whatsapp: item.phone,
+                userType: item.profiles.length > 0 ? item.profiles[0].name : "",
+              };
+            }
+          );
           setUserDataProcessed(dataTemp);
-          console.log(userDataResponse.content);
         }
       } catch (error) {
         console.log(error);
@@ -59,7 +87,7 @@ const Home = () => {
   useEffect(() => {
     async function fetchUserData() {
       try {
-        const data: usersDashBoard = await usersDashBoard();
+        const data: DashboardData = await usersDashBoard();
         if (data) {
           setUserDashboard(data);
         }
@@ -73,7 +101,7 @@ const Home = () => {
 
   const dadosUsuariosLimitados = userDataProcessed.slice(0, 4);
 
-  const Columns = ["Usuário", "E-mail", "WhatsApp", "Tipo de usuario"];
+  const Columns = ["Usuário", "E-mail", "WhatsApp", "Tipo de usuário"];
 
   return (
     <>

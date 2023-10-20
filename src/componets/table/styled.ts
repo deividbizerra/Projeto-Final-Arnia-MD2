@@ -10,8 +10,6 @@ export const Tabela = styled.table`
   td {
     padding: 10px;
     text-align: left;
-
-
   }
 
   th {
@@ -21,6 +19,4 @@ export const Tabela = styled.table`
   tr:nth-child(even) {
     background: ${({ theme }) => theme.colors.whiteice};
   }
-
-  
-`
+`;

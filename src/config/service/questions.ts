@@ -4,7 +4,7 @@ import api from "./config";
 
 export const questions = async () => {
   try {
-    const response: AxiosResponse<any> = await api.get(`questions`, {
+    const response: AxiosResponse = await api.get(`questions`, {
       headers: {
         Authorization: localStorage.getItem("token"),
       },

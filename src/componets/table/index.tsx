@@ -1,6 +1,9 @@
 import { ReactNode } from "react";
 import { Tabela } from "./styled";
 
+
+
+
 type TableRow = Record<string, string | number | ReactNode>;
 
 type TableProps = {
