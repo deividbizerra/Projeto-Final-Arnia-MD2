@@ -15,6 +15,7 @@ import Editspecialty from "../../pages/editSpecialty";
 import NewPlan from "../../pages/newPlans";
 import EditPlan from "../../pages/editPlans";
 import ProfileEditing from "../../pages/user";
+import EditNotification from "../../pages/editNotifications";
 
 const Router = () => {
   return (
@@ -35,6 +36,7 @@ const Router = () => {
           <Route path="new-faq" element={<NewFaq />} />
           <Route path="new-specialty" element={<Newspecialty />} />
           <Route path="edit-specialty/:id" element={<Editspecialty />} />
+          <Route path="edit-notification" element={<EditNotification />} />
           <Route path="new-notifications" element={<NewNotification />} />
           <Route path="userData" element={<UserData />} />
         </Route>

@@ -64,8 +64,18 @@ const NewPlan = () => {
       return false;
     }
 
+
+    type Props={
+      id?:number;
+      type:string | null,
+      planTitle: string,
+      period: string,
+      values: string,
+      enabled: boolean,
+    }
+
     try {
-      const newPlanData = {
+      const newPlanData:Props = {
         type: type,
         planTitle: planTitle,
         period: period,

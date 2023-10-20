@@ -12,16 +12,14 @@ import CustomIconButtons from "../../componets/ui/icons";
 import { CardFilterUsers } from "../../componets/cardFilterUsers";
 
 const Plans = () => {
-  const Columns = ["Plano", "Valor", "Situação", "Ações", "Tipo de usuário"];
+  const Columns = ["Plano", "Valor", "Situação", "Ações"];
   const navigation = useNavigate();
   const [userData, setUserData] = useState<ProcessPlans[]>([]);
   const [selectedTab, setSelectedTab] = useState("CONTRATANTE");
 
-  console.log(selectedTab);
-
   const fetchData = async () => {
     try {
-      const userDataResponse = await getPlans();
+      const userDataResponse = await getPlans(selectedTab);
 
       if (userDataResponse) {
         setUserData(
@@ -44,7 +42,6 @@ const Plans = () => {
                 onDelete={() => handleDelete(item.id)}
               />
             ),
-            type: `${item.type}`,
           }))
         );
       }
@@ -55,7 +52,7 @@ const Plans = () => {
 
   useEffect(() => {
     fetchData();
-  });
+  }, [selectedTab]);
 
   const handleDelete = async (id: string | number) => {
     try {
@@ -67,20 +64,10 @@ const Plans = () => {
     }
   };
 
-  const filteredPlanos = (categoria: string) => {
-    if (categoria === "MEDICO") {
-      return userData.filter((plano) => plano.type === "MEDICO");
-    } else if (categoria === "CONTRATANTE") {
-      return userData.filter((plano) => plano.type === "CONTRATANTE");
-    }
-  };
-
   const handleEdit = (id: number, userType: string) => {
     navigation(`/home/edit-plans?type=${userType}&id=${id}`);
   };
 
-  const contratantePlanos = filteredPlanos("CONTRATANTE");
-  const medicoPlanos = filteredPlanos("MEDICO");
   return (
     <>
       <ContDescription description="Planos" />
@@ -90,13 +77,13 @@ const Plans = () => {
           text="Contratantes"
           isSelected={selectedTab === "CONTRATANTE"}
           onClick={() => setSelectedTab("CONTRATANTE")}
-          quantid={contratantePlanos?.length}
+          quantid={0}
         />
         <CardFilterUsers
           text="Médicos"
           isSelected={selectedTab === "MEDICO"}
           onClick={() => setSelectedTab("MEDICO")}
-          quantid={medicoPlanos?.length}
+          quantid={0}
         />
       </ContainerCardFilter>
       <ContainerTble style={{ marginTop: "32px" }}>
@@ -107,7 +94,7 @@ const Plans = () => {
           </Link>
         </ContainerFilter>
 
-        <Table columns={Columns} data={filteredPlanos(selectedTab) ?? []} />
+        <Table columns={Columns} data={userData} />
       </ContainerTble>
     </>
   );

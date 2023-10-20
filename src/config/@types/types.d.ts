@@ -46,7 +46,6 @@ type UserType = {
   name: string;
   enabled: boolean;
   title: string;
-  sendingDate: string;
   period: string;
   values: number;
 };
@@ -55,7 +54,7 @@ type ProcessPlans = {
   planTitle: string;
   enabled: boolean;
   period: string;
-  type: string;
+  type: string ;
   values: number;
 };
 
@@ -68,6 +67,14 @@ type ProcessedUserType = {
   state: string;
   userType: string;
   name: string;
+};
+
+type ProcessedNotification = {
+  id: number;
+  title: string;
+  sendingDate: string;
+  message: string;
+  type:string
 };
 
 type ProcessedSpecialties = {

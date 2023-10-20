@@ -1,11 +1,14 @@
 import { AxiosResponse } from "axios";
 import api from "./config";
 
-export const getPlans = async () => {
+export const getPlans = async (filterType: string) => {
   try {
     const response: AxiosResponse = await api.get(`plans`, {
       headers: {
         Authorization: localStorage.getItem("token"),
+      },
+      params: {
+        type: filterType,
       },
     });
     const userData = response.data;
@@ -17,7 +20,16 @@ export const getPlans = async () => {
   }
 };
 
-export const createPlanos = async (specialtyData: any) => {
+type Props={
+  id?:number;
+  type:string | null,
+  planTitle: string,
+  period: string,
+  values: string,
+  enabled: boolean,
+}
+
+export const createPlanos = async (specialtyData: Props) => {
   try {
     const response = await api.post(`plans`, specialtyData, {
       headers: {
@@ -44,17 +56,20 @@ export const deletePlans = async (id: number | string) => {
   }
 };
 
-export const updatePlans = async (id: any, updatedData: any) => {
+export const updatePlans = async (
+  id: number,
+  updatedData: ProcessPlans
+): Promise<ProcessPlans | null> => {
   try {
-    const response = await api.put(`plans/${id}`, updatedData, {
+    const response: AxiosResponse = await api.put(`plans/${id}`, updatedData, {
       headers: {
         Authorization: localStorage.getItem("token"),
       },
     });
-    const updatedPlans = response.data;
+    const updatedPlans: ProcessPlans = response.data;
     return updatedPlans;
   } catch (error) {
-    console.log("Erro ao atualizar planos");
+    console.log("Erro ao atualizar planos", error);
     throw error;
   }
 };
@@ -74,12 +89,11 @@ export const getPlansById = async (id: number | string) => {
   }
 };
 
-
 export const plansSearch = async (searchs: string | null) => {
   try {
     let search = "";
     if (searchs) {
-      search = `search=${searchs}`; 
+      search = `search=${searchs}`;
     }
     const response: AxiosResponse = await api.get(`plans?${search}`, {
       headers: {
