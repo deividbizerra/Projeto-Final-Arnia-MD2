@@ -19,15 +19,7 @@ import GroupIcon from "@mui/icons-material/Group";
 import { Link } from "react-router-dom";
 import { usersDashBoard } from "../../config/service/usersDashbord";
 import { usersRegister } from "../../config/service/usersRegiste";
-import Table from "../../componets/Table";
-
-interface UserData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  profiles: { name: string }[];
-}
+import Table  from "../../componets/Table";
 
 interface ProcessedUserData {
   user: string;
@@ -36,7 +28,7 @@ interface ProcessedUserData {
   userType: string;
 }
 
-interface DashboardData {
+interface UserDashboardData {
   doctor: {
     total: number;
     available: number;
@@ -52,8 +44,9 @@ interface DashboardData {
 const Home: React.FC = () => {
   const currentDate = new Date();
   const formattedDate = currentDate.toLocaleDateString("pt-BR");
-  const [userDashboard, setUserDashboard] = useState<DashboardData | null>(null);
-  const [, setUserData] = useState<UserData[]>([]);
+  const [userDashboard, setUserDashboard] = useState<UserDashboardData | null>(
+    null
+  );
   const [userDataProcessed, setUserDataProcessed] = useState<ProcessedUserData[]>(
     []
   );
@@ -63,17 +56,14 @@ const Home: React.FC = () => {
       try {
         const userDataResponse = await usersRegister();
         if (userDataResponse) {
-          setUserData(userDataResponse.content);
-          const dataTemp: ProcessedUserData[] = userDataResponse.content.map(
-            (item: UserData) => {
-              return {
-                user: `${item.firstName} ${item.lastName}`,
-                email: item.email,
-                whatsapp: item.phone,
-                userType: item.profiles.length > 0 ? item.profiles[0].name : "",
-              };
-            }
-          );
+          const dataTemp: ProcessedUserData[] = userDataResponse.content.map((item) => {
+            return {
+              user: `${item.firstName} ${item.lastName}`,
+              email: item.email,
+              whatsapp: item.phone,
+              userType: item.profiles.length > 0 ? item.profiles[0].name : "",
+            };
+          });
           setUserDataProcessed(dataTemp);
         }
       } catch (error) {
@@ -87,7 +77,7 @@ const Home: React.FC = () => {
   useEffect(() => {
     async function fetchUserData() {
       try {
-        const data: DashboardData = await usersDashBoard();
+        const data: UserDashboardData = await usersDashBoard();
         if (data) {
           setUserDashboard(data);
         }
@@ -101,10 +91,10 @@ const Home: React.FC = () => {
 
   const dadosUsuariosLimitados = userDataProcessed.slice(0, 4);
 
-  const Columns = ["Usuário", "E-mail", "WhatsApp", "Tipo de usuário"];
+  const Columns: string[] = ["Usuário", "E-mail", "WhatsApp", "Tipo de usuario"];
 
   return (
-    <>
+    <div>
       <ContainerHome>
         <CardWelcome>
           <DivImg>
@@ -200,7 +190,7 @@ const Home: React.FC = () => {
           <Table columns={Columns} data={dadosUsuariosLimitados} />
         </div>
       </ContainerTble>
-    </>
+    </div>
   );
 };
 
