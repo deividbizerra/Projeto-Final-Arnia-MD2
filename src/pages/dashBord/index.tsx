@@ -56,7 +56,7 @@ const Home: React.FC = () => {
       try {
         const userDataResponse = await usersRegister();
         if (userDataResponse) {
-          const dataTemp: ProcessedUserData[] = userDataResponse.content.map((item) => {
+          const dataTemp: ProcessedUserData[] = userDataResponse.content.map((item: UserData) => {
             return {
               user: `${item.firstName} ${item.lastName}`,
               email: item.email,

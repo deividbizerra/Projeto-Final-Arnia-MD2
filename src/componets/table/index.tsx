@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Tabela } from "./styled";
+import { Tables } from "./styled";
 
 type TableRow = Record<string, string | number | ReactNode>;
 
@@ -10,7 +10,7 @@ type TableProps = {
 
 const Table = ({ columns, data }: TableProps) => {
   return (
-    <Tabela>
+    <Tables>
       <thead>
         <tr>
           {columns.map((columnName, index) => (
@@ -27,7 +27,7 @@ const Table = ({ columns, data }: TableProps) => {
           </tr>
         ))}
       </tbody>
-    </Tabela>
+    </Tables>
   );
 };
 

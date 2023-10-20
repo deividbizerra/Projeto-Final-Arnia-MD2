@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Tabela = styled.table`
+export const Tables = styled.table`
   width: 100%;
   border-collapse: collapse;
   font-family: ${({ theme }) => theme.fonts.poppins};
