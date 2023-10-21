@@ -1,4 +1,4 @@
-import{ useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AddButton from "../../componets/Buttons/addButton";
 import { ContDescription } from "../../componets/contetDescription";
@@ -29,7 +29,7 @@ const Plans = () => {
             values: new Intl.NumberFormat("pt-BR", {
               style: "currency",
               currency: "BRL",
-            }).format(item.values), // Format values as currency
+            }).format(item.values),
             status: (
               <div>
                 <IOSSwitch sx={{ m: 1 }} checked={item.enabled} />
@@ -39,8 +39,8 @@ const Plans = () => {
             actions: (
               <CustomIconButtons
                 id={item.id}
-                onEdit={() => handleEdit(item.id, item.type)}
-                onDelete={() => handleDelete(item.id)}
+                onEdit={(id) => handleEdit(id, item.type)}
+                onDelete={(id) => handleDelete(id)}
               />
             ),
           }))
@@ -61,8 +61,8 @@ const Plans = () => {
             actions: (
               <CustomIconButtons
                 id={item.id}
-                onEdit={() => handleEdit(item.id, item.type)}
-                onDelete={() => handleDelete(item.id)}
+                onEdit={(id) => handleEdit(id, item.type)}
+                onDelete={(id) => handleDelete(id)}
               />
             ),
           }))
@@ -78,6 +78,9 @@ const Plans = () => {
   }, [selectedTab]);
 
   const handleDelete = async (id: string | number) => {
+    if (typeof id === "string") {
+      id = parseInt(id);
+    }
     try {
       await deletePlans(id);
       fetchData();
@@ -87,7 +90,7 @@ const Plans = () => {
     }
   };
 
-  const handleEdit = (id: number, userType: string) => {
+  const handleEdit = (id: number | string, userType: string| null)  => {
     navigation(`/home/edit-plans?type=${userType}&id=${id}`);
   };
 

@@ -60,9 +60,10 @@ type ProcessPlans = {
   planTitle: string;
   enabled: boolean;
   period: string;
-  type: string | null ;
-  values: string;
+  type: string | null;
+  values: number; 
 };
+
 type NotificationData = {
   id?: number;
   type: string | null;

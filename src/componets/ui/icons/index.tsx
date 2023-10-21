@@ -4,7 +4,7 @@ import { ContainerIcons, DeleteIconStyled, EditIconStyled, VisibilityIconStyled 
 import ModalDeleted from '../../modalDeleted';
 
 type CustomIconButtonsProps = {
-    id: string | number;
+    id: string | number | any
     onEdit: (id: string | number) => void; 
     onDelete: (id: string | number) => void; 
   };
