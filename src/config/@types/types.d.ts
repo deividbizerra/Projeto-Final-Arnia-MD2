@@ -61,7 +61,7 @@ type ProcessPlans = {
   enabled: boolean;
   period: string;
   type: string | null;
-  values: number; 
+  values: string; 
 };
 
 type NotificationData = {

@@ -18,6 +18,14 @@ const Plans = () => {
   const [selectedTab, setSelectedTab] = useState("CONTRATANTE");
   const [filteredData, setFilteredData] = useState<ProcessPlans[]>([]);
 
+  const formatCurrency = (value: string): string => {
+    const numericValue = parseFloat(value);
+    return new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(numericValue);
+  };
+
   const fetchData = async () => {
     try {
       const userDataResponse = await getPlans(selectedTab);
@@ -26,10 +34,7 @@ const Plans = () => {
         setUserData(
           userDataResponse.content.map((item: ProcessPlans) => ({
             period: `${item.period}`,
-            values: new Intl.NumberFormat("pt-BR", {
-              style: "currency",
-              currency: "BRL",
-            }).format(item.values),
+            values: formatCurrency(item.values),
             status: (
               <div>
                 <IOSSwitch sx={{ m: 1 }} checked={item.enabled} />
@@ -48,10 +53,7 @@ const Plans = () => {
         setFilteredData(
           userDataResponse.content.map((item: ProcessPlans) => ({
             period: `${item.period}`,
-            values: new Intl.NumberFormat("pt-BR", {
-              style: "currency",
-              currency: "BRL",
-            }).format(item.values), // Format values as currency
+            values: formatCurrency(item.values),
             status: (
               <div>
                 <IOSSwitch sx={{ m: 1 }} checked={item.enabled} />
@@ -90,7 +92,7 @@ const Plans = () => {
     }
   };
 
-  const handleEdit = (id: number | string, userType: string| null)  => {
+  const handleEdit = (id: number | string, userType: string | null) => {
     navigation(`/home/edit-plans?type=${userType}&id=${id}`);
   };
 

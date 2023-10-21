@@ -19,7 +19,7 @@ import { BoxNewPlans } from "../newPlans/styled";
 
 interface Option {
   label: string;
-  value: string;
+  value: string
 }
 
 const StyledSelect: React.FC<{
