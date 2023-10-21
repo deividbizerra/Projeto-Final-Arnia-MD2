@@ -15,18 +15,10 @@ import { useNavigate } from "react-router-dom";
 import { format, parseISO } from "date-fns";
 import { ContainerNewSpecialty } from "../newNotification/styled";
 
-type NotificationData = {
-  id?: number;
-  type: string | null;
-  title: string;
-  message: string;
-  sendingDate: string;
-};
-
 const EditNotification: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const type: string | null = new URLSearchParams(location.search).get("type");
-  const planId: string = new URLSearchParams(location.search).get("id");
+  const planId = new URLSearchParams(location.search).get("id");
   const [title, setTitle] = useState<string>("");
   const [message, setMessage] = useState<string>("");
   const [sendingDate, setSendingDate] = useState<string>("");

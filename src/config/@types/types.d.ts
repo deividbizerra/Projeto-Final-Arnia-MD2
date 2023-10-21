@@ -56,12 +56,19 @@ type UserType = {
   values: number;
 };
 type ProcessPlans = {
-  id: number;
+  id?: number;
   planTitle: string;
   enabled: boolean;
   period: string;
-  type: string ;
-  values: number;
+  type: string | null ;
+  values: string;
+};
+type NotificationData = {
+  id?: number;
+  type: string | null;
+  title: string;
+  message: string;
+  sendingDate: string;
 };
 
 type ProcessedUserType = {

@@ -48,7 +48,7 @@ export const deleteSpecialty = async (id: number | string) => {
 
 
 
-export const updateSpecialty = async (id: number, updatedData: string) => {
+export const updateSpecialty = async (id: number, updatedData: Specialty) => {
   try {
     const response = await api.put(`specialties/${id}`, updatedData, {
       headers: {

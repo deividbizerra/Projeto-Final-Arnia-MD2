@@ -57,7 +57,7 @@ export const deletePlans = async (id: number | string) => {
 };
 
 export const updatePlans = async (
-  id: number,
+  id: string,
   updatedData: ProcessPlans
 ): Promise<ProcessPlans | null> => {
   try {

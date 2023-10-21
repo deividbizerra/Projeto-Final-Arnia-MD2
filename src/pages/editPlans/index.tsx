@@ -84,15 +84,14 @@ const EditPlan = () => {
 
     try {
       // Construct an object with the updated plan data
-      const updatedPlanData = {
+      const updatedPlanData: ProcessPlans = {
         planTitle: planTitle,
         period: period,
         values: values,
         enabled: checked,
-        type: type, // Inclua o tipo (type) no objeto de dados
+        type: type,
       };
 
-      // Update the plan
       if (planId) {
         const response = await updatePlans(planId, updatedPlanData);
         if (response) {

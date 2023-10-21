@@ -71,8 +71,8 @@ export const getNotificationsById = async (id: number | string) => {
 };
 
 export const updateNotification = async (
-  id: number,
-  updatedData: ProcessedNotification
+  id: string,
+  updatedData: NotificationData
 ): Promise<ProcessedNotification | null> => {
   try {
     const response: AxiosResponse = await api.put(
