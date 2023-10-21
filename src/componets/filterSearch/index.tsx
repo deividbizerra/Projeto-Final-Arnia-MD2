@@ -1,3 +1,5 @@
+
+
 import React, { useState } from "react";
 import { IconSearch, InputFilterSearch, InputWrapper } from "./styled";
 
@@ -11,7 +13,7 @@ const FilterSearch: React.FC<FilterSearchProps> = ({ onSearch }) => {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newSearchTerm = event.target.value;
     setSearchTerm(newSearchTerm);
-    onSearch(newSearchTerm);
+    onSearch(newSearchTerm); // Call the parent's search callback
   };
 
   return (

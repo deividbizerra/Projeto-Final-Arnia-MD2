@@ -1,20 +1,22 @@
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
 import AddButton from "../../componets/Buttons/addButton";
 import { ContDescription } from "../../componets/contetDescription";
 import FilterSearch from "../../componets/filterSearch";
 import { ContainerTble } from "../dashBord/style";
 import { ContainerFilter } from "../registeredUser/styled";
-import Table from "../../componets/Table";
+import Table from "../../componets/table/inde";
 import CustomIconButtons from "../../componets/ui/icons";
 import { questions } from "../../config/service/questions";
-
 
 const Faq = () => {
   const Columns = ["Título", "Ações"];
 
   const [, setUserData] = useState([]);
-  const [userDataProcessed, setUserDataProcessed] = useState<ProcessedUserType[]>([]);
+  const [userDataProcessed, setUserDataProcessed] = useState<ProcessedUserType[]>(
+    []
+  );
+  const [filteredData, setFilteredData] = useState<ProcessedUserType[]>([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -23,18 +25,21 @@ const Faq = () => {
 
         if (userDataResponse) {
           setUserData(userDataResponse);
-          console.log(userDataResponse)
-          const dataTemp: ProcessedUserType[] = userDataResponse.content.map((item: UserType) => ({
-            name: `${item.title}`,
-            actions: (  
-              <CustomIconButtons
-                id={item.id} 
-                onEdit={handleEdit} 
-                onDelete={handleDelete} 
-              />
-            ),
-          }));
+          console.log(userDataResponse);
+          const dataTemp: ProcessedUserType[] = userDataResponse.content.map(
+            (item: UserType) => ({
+              name: `${item.title}`,
+              actions: (
+                <CustomIconButtons
+                  id={item.id}
+                  onEdit={handleEdit}
+                  onDelete={handleDelete}
+                />
+              ),
+            })
+          );
           setUserDataProcessed(dataTemp);
+          setFilteredData(dataTemp); // Define os dados filtrados como os dados originais
           console.log(userDataResponse.content);
         }
       } catch (error) {
@@ -46,7 +51,6 @@ const Faq = () => {
   }, []);
 
   const handleEdit = (id: string | number) => {
-   
     console.log(`Editar item com ID ${id}`);
   };
 
@@ -54,21 +58,26 @@ const Faq = () => {
     console.log(`Excluir item com ID ${id}`);
   };
 
+  const handleSearch = (searchTerm: string) => {
+    // Filtrar os dados com base na palavra-chave
+    const filtered = userDataProcessed.filter((item) =>
+      item.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredData(filtered);
+  };
+
   return (
     <>
       <ContDescription description="FAQ (Perguntas Frequentes)" />
       <ContainerTble style={{ marginTop: "32px" }}>
         <ContainerFilter>
-          <FilterSearch />
+          <FilterSearch onSearch={handleSearch} />
           <Link to="/home/new-faq">
             <AddButton>Novo FAQ</AddButton>
           </Link>
         </ContainerFilter>
 
-        <Table
-          columns={Columns}
-          data={userDataProcessed}
-        />
+        <Table columns={Columns} data={filteredData} />
       </ContainerTble>
     </>
   );

@@ -19,7 +19,7 @@ import GroupIcon from "@mui/icons-material/Group";
 import { Link } from "react-router-dom";
 import { usersDashBoard } from "../../config/service/usersDashbord";
 import { usersRegister } from "../../config/service/usersRegiste";
-import Table  from "../../componets/Table";
+import Table from "../../componets/table/inde";
 
 interface ProcessedUserData {
   user: string;
@@ -47,23 +47,25 @@ const Home: React.FC = () => {
   const [userDashboard, setUserDashboard] = useState<UserDashboardData | null>(
     null
   );
-  const [userDataProcessed, setUserDataProcessed] = useState<ProcessedUserData[]>(
-    []
-  );
+  const [userDataProcessed, setUserDataProcessed] = useState<
+    ProcessedUserData[]
+  >([]);
 
   useEffect(() => {
     async function fetchData() {
       try {
         const userDataResponse = await usersRegister();
         if (userDataResponse) {
-          const dataTemp: ProcessedUserData[] = userDataResponse.content.map((item: UserData) => {
-            return {
-              user: `${item.firstName} ${item.lastName}`,
-              email: item.email,
-              whatsapp: item.phone,
-              userType: item.profiles.length > 0 ? item.profiles[0].name : "",
-            };
-          });
+          const dataTemp: ProcessedUserData[] = userDataResponse.content.map(
+            (item: UserData) => {
+              return {
+                user: `${item.firstName} ${item.lastName}`,
+                email: item.email,
+                whatsapp: item.phone,
+                userType: item.profiles.length > 0 ? item.profiles[0].name : "",
+              };
+            }
+          );
           setUserDataProcessed(dataTemp);
         }
       } catch (error) {
@@ -91,7 +93,12 @@ const Home: React.FC = () => {
 
   const dadosUsuariosLimitados = userDataProcessed.slice(0, 4);
 
-  const Columns: string[] = ["Usuário", "E-mail", "WhatsApp", "Tipo de usuario"];
+  const Columns: string[] = [
+    "Usuário",
+    "E-mail",
+    "WhatsApp",
+    "Tipo de usuario",
+  ];
 
   return (
     <div>

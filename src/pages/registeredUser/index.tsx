@@ -3,10 +3,11 @@ import { ContDescription } from "../../componets/contetDescription";
 import { ContainerTble } from "../dashBord/style";
 import { ContainerCardFilter, ContainerTotal } from "./styled";
 import { userSearch, usersRegister } from "../../config/service/usersRegiste";
-import Table from "../../componets/Table";
+
 import TablePagination from "../../componets/tableWithPaginationProps";
 import { CardFilterUsers } from "../../componets/cardFilterUsers";
 import FilterSearch from "../../componets/filterSearch";
+import Table from "../../componets/table/inde";
 
 const UserCadrast = () => {
   const [descriptionText, setDescriptionText] = useState("Todos");
@@ -71,15 +72,17 @@ const UserCadrast = () => {
     try {
       const userDataResponse = await userSearch(searchTerm);
       if (userDataResponse) {
-        const dataTemp: ProcessedUserType[] = userDataResponse.content.map((item: UserType) => ({
-          user: `${item.firstName} ${item.lastName}`,
-          email: item.email,
-          whatsapp: item.phone,
-          specialties: item.specialties,
-          city: item.city,
-          state: item.state,
-          userType: item.profiles.length > 0 ? item.profiles[0].name : "",
-        }));
+        const dataTemp: ProcessedUserType[] = userDataResponse.content.map(
+          (item: UserType) => ({
+            user: `${item.firstName} ${item.lastName}`,
+            email: item.email,
+            whatsapp: item.phone,
+            specialties: item.specialties,
+            city: item.city,
+            state: item.state,
+            userType: item.profiles.length > 0 ? item.profiles[0].name : "",
+          })
+        );
         setUserDataProcessed(dataTemp);
       }
     } catch (error) {
@@ -98,12 +101,12 @@ const UserCadrast = () => {
   };
 
   const filteredData = userDataProcessed.filter((user) => {
-    if (descriptionText === 'Todos') {
+    if (descriptionText === "Todos") {
       return true;
-    } else if (descriptionText === 'Contratantes') {
-      return user.userType === 'CONTRATANTE';
-    } else if (descriptionText === 'Médicos') {
-      return user.userType === 'MEDICO';
+    } else if (descriptionText === "Contratantes") {
+      return user.userType === "CONTRATANTE";
+    } else if (descriptionText === "Médicos") {
+      return user.userType === "MEDICO";
     }
     return false;
   });

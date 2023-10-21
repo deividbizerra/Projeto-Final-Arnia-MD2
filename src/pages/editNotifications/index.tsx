@@ -26,7 +26,7 @@ type NotificationData = {
 const EditNotification: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const type: string | null = new URLSearchParams(location.search).get("type");
-  const planId: string | null = new URLSearchParams(location.search).get("id");
+  const planId: string = new URLSearchParams(location.search).get("id");
   const [title, setTitle] = useState<string>("");
   const [message, setMessage] = useState<string>("");
   const [sendingDate, setSendingDate] = useState<string>("");

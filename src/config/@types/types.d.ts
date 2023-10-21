@@ -18,7 +18,7 @@ interface UserData {
   firstName: string;
   lastName: string;
   phone:string
-  profiles:string[]
+
 }
 
 interface usersDashBoard {
@@ -80,6 +80,7 @@ type ProcessedNotification = {
   sendingDate: string;
   message: string;
   type:string
+  name:string
 };
 
 type ProcessedSpecialties = {

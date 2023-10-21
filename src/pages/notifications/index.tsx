@@ -1,11 +1,11 @@
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
 import AddButton from "../../componets/Buttons/addButton";
 import { ContDescription } from "../../componets/contetDescription";
 import FilterSearch from "../../componets/filterSearch";
 import { ContainerTble } from "../dashBord/style";
 import { ContainerCardFilter, ContainerFilter } from "../registeredUser/styled";
-import Table from "../../componets/Table";
+import Table from "../../componets/table/inde";
 import CustomIconButtons from "../../componets/ui/icons";
 import {
   deleteNotifications,
@@ -20,7 +20,11 @@ const Notifications = () => {
   const [userDataProcessed, setUserDataProcessed] = useState<
     ProcessedNotification[]
   >([]);
+  const [filteredNotifications, setFilteredNotifications] = useState<
+    ProcessedNotification[]
+  >([]);
   const [selectedTab, setSelectedTab] = useState("CONTRATANTE");
+
   const fetchData = async () => {
     try {
       const userDataResponse = await getNotifications(selectedTab);
@@ -54,6 +58,7 @@ const Notifications = () => {
           }
         );
         setUserDataProcessed(dataTemp);
+        setFilteredNotifications(dataTemp); // Define as notificações filtradas como as notificações originais
       }
     } catch (error) {
       console.log(error);
@@ -61,16 +66,23 @@ const Notifications = () => {
   };
 
   useEffect(() => {
-    fetchData(); // Agora você pode chamar fetchData aqui
+    fetchData();
   }, [selectedTab]);
+
+  const handleSearch = (searchTerm: string) => {
+    const filtered = userDataProcessed.filter((notification) =>
+      notification.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredNotifications(filtered);
+  };
 
   const handleDelete = async (id: string | number) => {
     try {
       await deleteNotifications(id);
       fetchData();
-      console.log(`Excluiu o a notificação com ID ${id}`);
+      console.log(`Excluiu a notificação com ID ${id}`);
     } catch (error) {
-      console.error("Erro ao excluir o notificação:", error);
+      console.error("Erro ao excluir a notificação:", error);
     }
   };
 
@@ -96,13 +108,13 @@ const Notifications = () => {
       </ContainerCardFilter>
       <ContainerTble style={{ marginTop: "32px" }}>
         <ContainerFilter>
-          <FilterSearch />
+          <FilterSearch onSearch={handleSearch} />
           <Link to={`/home/new-notifications?type=${selectedTab}`}>
             <AddButton>Nova Notificação</AddButton>
           </Link>
         </ContainerFilter>
 
-        <Table columns={Columns} data={userDataProcessed} />
+        <Table columns={Columns} data={filteredNotifications} />
       </ContainerTble>
     </>
   );
