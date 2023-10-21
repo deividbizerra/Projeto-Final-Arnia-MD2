@@ -27,6 +27,10 @@ interface ProcessedUserData {
   whatsapp: string;
   userType: string;
 }
+interface UserProfile {
+  name: string;
+  // Outras propriedades, se aplicável
+}
 
 interface UserDashboardData {
   doctor: {
@@ -47,9 +51,9 @@ const Home: React.FC = () => {
   const [userDashboard, setUserDashboard] = useState<UserDashboardData | null>(
     null
   );
-  const [userDataProcessed, setUserDataProcessed] = useState<
-    ProcessedUserData[]
-  >([]);
+  const [userDataProcessed, setUserDataProcessed] = useState<ProcessedUserData[]>(
+    []
+  );
 
   useEffect(() => {
     async function fetchData() {
@@ -58,11 +62,22 @@ const Home: React.FC = () => {
         if (userDataResponse) {
           const dataTemp: ProcessedUserData[] = userDataResponse.content.map(
             (item: UserData) => {
+              let userType = "";
+
+              if (typeof item.profiles[0] === "string") {
+                userType = item.profiles[0];
+              } else if (
+                typeof item.profiles[0] === "object" &&
+                "name" in item.profiles[0]
+              ) {
+                const userProfile = item.profiles[0] as UserProfile;
+                userType = userProfile.name;
+              }
               return {
                 user: `${item.firstName} ${item.lastName}`,
                 email: item.email,
                 whatsapp: item.phone,
-                userType: item.profiles.length > 0 ? item.profiles[0].name : "",
+                userType,
               };
             }
           );
@@ -97,7 +112,7 @@ const Home: React.FC = () => {
     "Usuário",
     "E-mail",
     "WhatsApp",
-    "Tipo de usuario",
+    "Tipo de usuário",
   ];
 
   return (

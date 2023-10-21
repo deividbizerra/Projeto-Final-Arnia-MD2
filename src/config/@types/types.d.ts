@@ -18,7 +18,8 @@ interface UserData {
   firstName: string;
   lastName: string;
   phone:string
-
+profiles:string
+name:string
 }
 
 interface usersDashBoard {

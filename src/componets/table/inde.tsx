@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { Tables } from "./styled";
 
-type TableRow = Record<string, string | number | ReactNode>;
+type TableRow = Record<string, string | number |any| ReactNode>  ;
 
 type TableProps = {
   columns: string[];
